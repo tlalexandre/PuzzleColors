@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://d1esa4j588q6j"]
+
+[ext_resource type="Script" uid="uid://ba1ccv4yyfjrb" path="res://scripts/player.gd" id="1_3vyb7"]
+[ext_resource type="PackedScene" uid="uid://nrvnd2jy2qm" path="res://scenes/light.tscn" id="2_g2els"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_u8vuu"]
+radius = 32.0156
+
+[sub_resource type="Gradient" id="Gradient_u8vuu"]
+offsets = PackedFloat32Array(0.850649, 0.867742)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3vyb7"]
+gradient = SubResource("Gradient_u8vuu")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8, 0)
+
+[node name="Player" type="CharacterBody2D"]
+collision_mask = 14
+script = ExtResource("1_3vyb7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_u8vuu")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_3vyb7")
+
+[node name="Light" parent="." instance=ExtResource("2_g2els")]
+rotation = 4.18879
+color_light = Color(0, 0, 1, 1)

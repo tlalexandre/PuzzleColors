@@ -1,0 +1,62 @@
+[gd_scene load_steps=3 format=3 uid="uid://nrvnd2jy2qm"]
+
+[ext_resource type="Script" uid="uid://bsquxyvtjldne" path="res://scenes/light.gd" id="1_2e2gu"]
+[ext_resource type="Texture2D" uid="uid://q2elxb6owi1p" path="res://assets/1x/1x/Fichier 2.png" id="1_24oxn"]
+
+[node name="Light" type="Node2D"]
+script = ExtResource("1_2e2gu")
+
+[node name="TorchLight" type="PointLight2D" parent="."]
+position = Vector2(0, 0.081442)
+scale = Vector2(0.450791, 0.661633)
+color = Color(0, 0.678647, 0.680372, 1)
+energy = 5.0
+shadow_enabled = true
+shadow_filter = 1
+texture = ExtResource("1_24oxn")
+offset = Vector2(1.12796, -494.646)
+
+[node name="Raycasts" type="Node2D" parent="."]
+
+[node name="RayCast2D" type="RayCast2D" parent="Raycasts"]
+rotation = -3.14159
+target_position = Vector2(179, 319)
+collision_mask = 10
+collide_with_areas = true
+
+[node name="RayCast2D2" type="RayCast2D" parent="Raycasts"]
+target_position = Vector2(-186, -531)
+collision_mask = 10
+collide_with_areas = true
+
+[node name="RayCast2D3" type="RayCast2D" parent="Raycasts"]
+target_position = Vector2(-107, -603)
+collision_mask = 10
+collide_with_areas = true
+
+[node name="RayCast2D4" type="RayCast2D" parent="Raycasts"]
+target_position = Vector2(-1, -656)
+collision_mask = 10
+collide_with_areas = true
+
+[node name="RayCast2D5" type="RayCast2D" parent="Raycasts"]
+target_position = Vector2(111, -600)
+collision_mask = 10
+collide_with_areas = true
+
+[node name="RayCast2D6" type="RayCast2D" parent="Raycasts"]
+target_position = Vector2(197, -523)
+collision_mask = 10
+collide_with_areas = true
+
+[node name="RayCast2D7" type="RayCast2D" parent="Raycasts"]
+target_position = Vector2(176, -310)
+collision_mask = 10
+collide_with_areas = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0.290196)
+position = Vector2(1, -329)
+scale = Vector2(0.410156, 0.662767)
+texture = ExtResource("1_24oxn")
