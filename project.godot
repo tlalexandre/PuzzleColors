@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="PuzzleColors"
-run/main_scene="uid://dqmr63pbfjk4p"
+run/main_scene="uid://by6yg1bnu67bs"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[autoload]
+
+LevelManager="*res://singletons/level_manager.gd"
 
 [global_group]
 
@@ -49,6 +53,7 @@ right={
 2d_physics/layer_3="Player Collision Barriers"
 2d_physics/layer_4="Boundaries"
 2d_physics/layer_5="Light Detection"
+2d_physics/layer_6="Goal"
 
 [rendering]
 

@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://dqmr63pbfjk4p"]
+[gd_scene load_steps=13 format=3 uid="uid://b5eve0drebuc7"]
 
-[ext_resource type="PackedScene" uid="uid://dhvvehmyuwrgs" path="res://scenes/wall.tscn" id="1_uwrxv"]
-[ext_resource type="PackedScene" uid="uid://d1esa4j588q6j" path="res://scenes/player.tscn" id="2_yqjtg"]
-[ext_resource type="PackedScene" uid="uid://nrvnd2jy2qm" path="res://scenes/light.tscn" id="3_lnu2h"]
-[ext_resource type="PackedScene" uid="uid://uvswqh21mlhb" path="res://scenes/barrier.tscn" id="4_lbhrr"]
+[ext_resource type="PackedScene" uid="uid://dhvvehmyuwrgs" path="res://scenes/wall.tscn" id="1_n46q3"]
+[ext_resource type="PackedScene" uid="uid://d1esa4j588q6j" path="res://scenes/player.tscn" id="2_btoec"]
+[ext_resource type="PackedScene" uid="uid://nrvnd2jy2qm" path="res://scenes/light.tscn" id="3_gwceb"]
+[ext_resource type="PackedScene" uid="uid://uvswqh21mlhb" path="res://scenes/barrier.tscn" id="4_l53as"]
+[ext_resource type="PackedScene" uid="uid://dwqoch6qgogbj" path="res://scenes/goal.tscn" id="5_3sk1a"]
 
 [sub_resource type="Gradient" id="Gradient_8cj0n"]
 offsets = PackedFloat32Array(1)
@@ -57,7 +58,7 @@ _data = {
 &"rotating_light": SubResource("Animation_lbhrr")
 }
 
-[node name="Game" type="Node2D"]
+[node name="Level1" type="Node2D"]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(1611, 314)
@@ -101,54 +102,54 @@ shape = SubResource("RectangleShape2D_lnu2h")
 
 [node name="Walls" type="Node2D" parent="."]
 
-[node name="Wall" parent="Walls" instance=ExtResource("1_uwrxv")]
+[node name="Wall" parent="Walls" instance=ExtResource("1_n46q3")]
 position = Vector2(571, 40)
 
-[node name="Wall9" parent="Walls" instance=ExtResource("1_uwrxv")]
+[node name="Wall9" parent="Walls" instance=ExtResource("1_n46q3")]
 position = Vector2(572, 480)
 
-[node name="Wall10" parent="Walls" instance=ExtResource("1_uwrxv")]
+[node name="Wall10" parent="Walls" instance=ExtResource("1_n46q3")]
 position = Vector2(570, 543)
 
-[node name="Wall11" parent="Walls" instance=ExtResource("1_uwrxv")]
+[node name="Wall11" parent="Walls" instance=ExtResource("1_n46q3")]
 position = Vector2(571, 605)
 
-[node name="Wall12" parent="Walls" instance=ExtResource("1_uwrxv")]
+[node name="Wall12" parent="Walls" instance=ExtResource("1_n46q3")]
 position = Vector2(571, 40)
 
-[node name="Wall13" parent="Walls" instance=ExtResource("1_uwrxv")]
+[node name="Wall13" parent="Walls" instance=ExtResource("1_n46q3")]
 position = Vector2(571, 40)
 
-[node name="Wall2" parent="Walls" instance=ExtResource("1_uwrxv")]
+[node name="Wall2" parent="Walls" instance=ExtResource("1_n46q3")]
 position = Vector2(379, 289)
 
-[node name="Wall3" parent="Walls" instance=ExtResource("1_uwrxv")]
+[node name="Wall3" parent="Walls" instance=ExtResource("1_n46q3")]
 position = Vector2(443, 289)
 
-[node name="Wall4" parent="Walls" instance=ExtResource("1_uwrxv")]
+[node name="Wall4" parent="Walls" instance=ExtResource("1_n46q3")]
 position = Vector2(508, 289)
 
-[node name="Wall5" parent="Walls" instance=ExtResource("1_uwrxv")]
+[node name="Wall5" parent="Walls" instance=ExtResource("1_n46q3")]
 position = Vector2(571, 288)
 
-[node name="Wall6" parent="Walls" instance=ExtResource("1_uwrxv")]
+[node name="Wall6" parent="Walls" instance=ExtResource("1_n46q3")]
 position = Vector2(571, 228)
 
-[node name="Wall7" parent="Walls" instance=ExtResource("1_uwrxv")]
+[node name="Wall7" parent="Walls" instance=ExtResource("1_n46q3")]
 position = Vector2(571, 166)
 
-[node name="Wall8" parent="Walls" instance=ExtResource("1_uwrxv")]
+[node name="Wall8" parent="Walls" instance=ExtResource("1_n46q3")]
 position = Vector2(571, 104)
 
-[node name="Player" parent="." instance=ExtResource("2_yqjtg")]
-position = Vector2(543, 368)
+[node name="Player" parent="." instance=ExtResource("2_btoec")]
+position = Vector2(196, 87)
 
-[node name="Light" parent="." instance=ExtResource("3_lnu2h")]
+[node name="Light" parent="." instance=ExtResource("3_gwceb")]
 position = Vector2(959, 630)
 rotation = -0.644027
 color_light = Color(0, 1, 0, 1)
 
-[node name="Barrier" parent="." instance=ExtResource("4_lbhrr")]
+[node name="Barrier" parent="." instance=ExtResource("4_l53as")]
 position = Vector2(570, 385)
 rotation = 1.5708
 barrier_color = Color(1, 0, 0, 1)
@@ -158,3 +159,6 @@ libraries = {
 &"": SubResource("AnimationLibrary_p57ef")
 }
 autoplay = "rotating_light"
+
+[node name="Goal" parent="." instance=ExtResource("5_3sk1a")]
+position = Vector2(1068, 84)
