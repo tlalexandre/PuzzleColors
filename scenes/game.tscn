@@ -68,28 +68,32 @@ offset = Vector2(-0.897052, 0.0150347)
 [node name="Boundaries" type="Node2D" parent="."]
 
 [node name="TopBoundary" type="StaticBody2D" parent="Boundaries"]
-collision_layer = 4
+collision_layer = 8
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/TopBoundary"]
 position = Vector2(573.5, 0)
 shape = SubResource("RectangleShape2D_yqjtg")
 
 [node name="BottomBoundary" type="StaticBody2D" parent="Boundaries"]
-collision_layer = 4
+collision_layer = 8
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/BottomBoundary"]
 position = Vector2(574, 643)
 shape = SubResource("RectangleShape2D_yqjtg")
 
 [node name="LeftBoundary" type="StaticBody2D" parent="Boundaries"]
-collision_layer = 4
+collision_layer = 8
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/LeftBoundary"]
 position = Vector2(-1, 319.25)
 shape = SubResource("RectangleShape2D_lnu2h")
 
 [node name="RightBoundary" type="StaticBody2D" parent="Boundaries"]
-collision_layer = 4
+collision_layer = 8
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/RightBoundary"]
 position = Vector2(1151, 319.25)
@@ -137,10 +141,10 @@ position = Vector2(571, 166)
 position = Vector2(571, 104)
 
 [node name="Player" parent="." instance=ExtResource("2_yqjtg")]
-position = Vector2(86, 93)
+position = Vector2(543, 368)
 
 [node name="Light" parent="." instance=ExtResource("3_lnu2h")]
-position = Vector2(1097, 580)
+position = Vector2(959, 630)
 rotation = -0.644027
 color_light = Color(0, 1, 0, 1)
 
@@ -153,3 +157,4 @@ barrier_color = Color(1, 0, 0, 1)
 libraries = {
 &"": SubResource("AnimationLibrary_p57ef")
 }
+autoplay = "rotating_light"

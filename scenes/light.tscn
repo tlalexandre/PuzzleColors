@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://nrvnd2jy2qm"]
 
-[ext_resource type="Script" uid="uid://bsquxyvtjldne" path="res://scenes/light.gd" id="1_2e2gu"]
+[ext_resource type="Script" uid="uid://bsquxyvtjldne" path="res://scripts/light.gd" id="1_2e2gu"]
 [ext_resource type="Texture2D" uid="uid://q2elxb6owi1p" path="res://assets/1x/1x/Fichier 2.png" id="1_24oxn"]
 
 [node name="Light" type="Node2D"]
@@ -21,37 +21,44 @@ offset = Vector2(1.12796, -494.646)
 [node name="RayCast2D" type="RayCast2D" parent="Raycasts"]
 rotation = -3.14159
 target_position = Vector2(179, 319)
-collision_mask = 10
+collision_mask = 18
+hit_from_inside = true
 collide_with_areas = true
 
 [node name="RayCast2D2" type="RayCast2D" parent="Raycasts"]
 target_position = Vector2(-186, -531)
-collision_mask = 10
+collision_mask = 18
+hit_from_inside = true
 collide_with_areas = true
 
 [node name="RayCast2D3" type="RayCast2D" parent="Raycasts"]
 target_position = Vector2(-107, -603)
-collision_mask = 10
+collision_mask = 18
+hit_from_inside = true
 collide_with_areas = true
 
 [node name="RayCast2D4" type="RayCast2D" parent="Raycasts"]
 target_position = Vector2(-1, -656)
-collision_mask = 10
+collision_mask = 18
+hit_from_inside = true
 collide_with_areas = true
 
 [node name="RayCast2D5" type="RayCast2D" parent="Raycasts"]
 target_position = Vector2(111, -600)
-collision_mask = 10
+collision_mask = 18
+hit_from_inside = true
 collide_with_areas = true
 
 [node name="RayCast2D6" type="RayCast2D" parent="Raycasts"]
 target_position = Vector2(197, -523)
-collision_mask = 10
+collision_mask = 18
+hit_from_inside = true
 collide_with_areas = true
 
 [node name="RayCast2D7" type="RayCast2D" parent="Raycasts"]
 target_position = Vector2(176, -310)
-collision_mask = 10
+collision_mask = 18
+hit_from_inside = true
 collide_with_areas = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

@@ -1,7 +1,7 @@
 extends CharacterBody2D
 var speed: float = 300.0
 @onready var torch_light: PointLight2D = $TorchLight
-@onready var light: Node2D = $Light
+@onready var light: Node2D = $PlayerLight
 
 func _physics_process(delta: float) -> void:
 	velocity = Vector2.ZERO

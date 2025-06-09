@@ -16,7 +16,7 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.8, 0)
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_mask = 14
 script = ExtResource("1_3vyb7")
 
@@ -26,6 +26,6 @@ shape = SubResource("CircleShape2D_u8vuu")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = SubResource("GradientTexture2D_3vyb7")
 
-[node name="Light" parent="." instance=ExtResource("2_g2els")]
+[node name="PlayerLight" parent="." instance=ExtResource("2_g2els")]
 rotation = 4.18879
 color_light = Color(0, 0, 1, 1)
