@@ -1,4 +1,5 @@
 extends Node2D
+class_name Light
 @export var color_light: Color
 @export var light_name: String = "Light"
 @onready var torch_light: PointLight2D = $TorchLight
@@ -27,7 +28,10 @@ func _physics_process(delta: float) -> void:
 				var barrier = collider.get_parent()  # Get the barrier node
 				if barrier and not barrier in new_hit_barriers:
 					new_hit_barriers.append(barrier)
-	
+			if collider.is_in_group("lenses"):
+				var lens = collider.get_parent()
+				lens.handle_light_hit(self, raycast)
+				
 	# Remove light from barriers that are no longer being hit
 	for barrier in currently_hit_barriers:
 		if not barrier in new_hit_barriers:

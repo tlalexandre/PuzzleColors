@@ -21,48 +21,47 @@ offset = Vector2(1.12796, -494.646)
 [node name="RayCast2D" type="RayCast2D" parent="Raycasts"]
 rotation = -3.14159
 target_position = Vector2(179, 319)
-collision_mask = 18
+collision_mask = 82
 hit_from_inside = true
 collide_with_areas = true
 
 [node name="RayCast2D2" type="RayCast2D" parent="Raycasts"]
 target_position = Vector2(-186, -531)
-collision_mask = 18
+collision_mask = 82
 hit_from_inside = true
 collide_with_areas = true
 
 [node name="RayCast2D3" type="RayCast2D" parent="Raycasts"]
 target_position = Vector2(-107, -603)
-collision_mask = 18
+collision_mask = 82
 hit_from_inside = true
 collide_with_areas = true
 
 [node name="RayCast2D4" type="RayCast2D" parent="Raycasts"]
 target_position = Vector2(-1, -656)
-collision_mask = 18
+collision_mask = 82
 hit_from_inside = true
 collide_with_areas = true
 
 [node name="RayCast2D5" type="RayCast2D" parent="Raycasts"]
 target_position = Vector2(111, -600)
-collision_mask = 18
+collision_mask = 82
 hit_from_inside = true
 collide_with_areas = true
 
 [node name="RayCast2D6" type="RayCast2D" parent="Raycasts"]
 target_position = Vector2(197, -523)
-collision_mask = 18
+collision_mask = 82
 hit_from_inside = true
 collide_with_areas = true
 
 [node name="RayCast2D7" type="RayCast2D" parent="Raycasts"]
 target_position = Vector2(176, -310)
-collision_mask = 18
+collision_mask = 82
 hit_from_inside = true
 collide_with_areas = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-visible = false
 modulate = Color(1, 1, 1, 0.290196)
 position = Vector2(1, -329)
 scale = Vector2(0.410156, 0.662767)

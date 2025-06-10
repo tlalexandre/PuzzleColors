@@ -22,6 +22,7 @@ LevelManager="*res://singletons/level_manager.gd"
 [global_group]
 
 barriers=""
+lenses=""
 
 [input]
 
@@ -54,6 +55,7 @@ right={
 2d_physics/layer_4="Boundaries"
 2d_physics/layer_5="Light Detection"
 2d_physics/layer_6="Goal"
+2d_physics/layer_7="Lenses"
 
 [rendering]
 

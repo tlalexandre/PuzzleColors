@@ -1,7 +1,6 @@
 extends CharacterBody2D
-var speed: float = 300.0
-@onready var torch_light: PointLight2D = $TorchLight
-@onready var light: Node2D = $PlayerLight
+var speed: float = 500.0
+@onready var straight_light: Node2D = $StraightLight
 
 func _physics_process(delta: float) -> void:
 	velocity = Vector2.ZERO
@@ -21,6 +20,6 @@ func _physics_process(delta: float) -> void:
 	# Make torchlight face mouse position
 	var mouse_pos = get_global_mouse_position()
 	var direction_to_mouse = global_position.direction_to(mouse_pos)
-	light.rotation = direction_to_mouse.angle() + deg_to_rad(90)
+	straight_light.rotation = direction_to_mouse.angle() + deg_to_rad(90)
 	
 	move_and_slide()

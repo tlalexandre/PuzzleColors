@@ -1,0 +1,61 @@
+[gd_scene load_steps=6 format=3 uid="uid://dx4qhnxp3nolb"]
+
+[ext_resource type="Script" uid="uid://bfbsr4114ou1v" path="res://scenes/straight_light.gd" id="1_lr36a"]
+
+[sub_resource type="Gradient" id="Gradient_lr36a"]
+offsets = PackedFloat32Array(0.883117, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_brou0"]
+gradient = SubResource("Gradient_lr36a")
+fill = 1
+fill_from = Vector2(0.490826, 1)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="Gradient" id="Gradient_bg5kb"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gjq3g"]
+gradient = SubResource("Gradient_bg5kb")
+
+[node name="StraightLight" type="Node2D"]
+script = ExtResource("1_lr36a")
+
+[node name="TorchLight" type="PointLight2D" parent="."]
+position = Vector2(-2, -657.669)
+scale = Vector2(0.8125, 20.5416)
+color = Color(0, 0.678647, 0.680372, 1)
+energy = 15.0
+shadow_enabled = true
+shadow_filter = 1
+texture = SubResource("GradientTexture2D_brou0")
+
+[node name="Raycasts" type="Node2D" parent="."]
+
+[node name="RayCast2D3" type="RayCast2D" parent="Raycasts"]
+position = Vector2(-27, 0)
+target_position = Vector2(0, -642)
+collision_mask = 82
+hit_from_inside = true
+collide_with_areas = true
+
+[node name="RayCast2D4" type="RayCast2D" parent="Raycasts"]
+target_position = Vector2(0, -656)
+collision_mask = 82
+hit_from_inside = true
+collide_with_areas = true
+
+[node name="RayCast2D5" type="RayCast2D" parent="Raycasts"]
+position = Vector2(23, 0)
+target_position = Vector2(0, -648)
+collision_mask = 82
+hit_from_inside = true
+collide_with_areas = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0.290196)
+position = Vector2(0.999999, -323.5)
+scale = Vector2(0.1875, 10.1406)
+texture = SubResource("GradientTexture2D_gjq3g")

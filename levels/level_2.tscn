@@ -1,0 +1,281 @@
+[gd_scene load_steps=14 format=3 uid="uid://73kixyng5ipw"]
+
+[ext_resource type="PackedScene" uid="uid://dhvvehmyuwrgs" path="res://scenes/wall.tscn" id="1_ilhis"]
+[ext_resource type="PackedScene" uid="uid://d1esa4j588q6j" path="res://scenes/player.tscn" id="2_ep78u"]
+[ext_resource type="PackedScene" uid="uid://nrvnd2jy2qm" path="res://scenes/light.tscn" id="3_dfjjl"]
+[ext_resource type="PackedScene" uid="uid://uvswqh21mlhb" path="res://scenes/barrier.tscn" id="4_at1ld"]
+[ext_resource type="PackedScene" uid="uid://dwqoch6qgogbj" path="res://scenes/goal.tscn" id="5_sd18g"]
+
+[sub_resource type="Gradient" id="Gradient_8cj0n"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_uwrxv"]
+gradient = SubResource("Gradient_8cj0n")
+fill_from = Vector2(0, 0.513761)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yqjtg"]
+size = Vector2(1167, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lnu2h"]
+size = Vector2(37, 651.5)
+
+[sub_resource type="Animation" id="Animation_iywne"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Light:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.644027]
+}
+
+[sub_resource type="Animation" id="Animation_lbhrr"]
+resource_name = "rotating_light"
+length = 3.0
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Light:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.966667, 1.96667, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -4.71239, 0.0, -3.14159]
+}
+
+[sub_resource type="Animation" id="Animation_5722l"]
+resource_name = "360"
+length = 4.0
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Light:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -1.5708, -3.14159, -4.71239, -6.28319]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_p57ef"]
+_data = {
+&"360": SubResource("Animation_5722l"),
+&"RESET": SubResource("Animation_iywne"),
+&"rotating_light": SubResource("Animation_lbhrr")
+}
+
+[node name="Level2" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1611, 314)
+scale = Vector2(1153.5, 648.5)
+texture = SubResource("GradientTexture2D_uwrxv")
+offset = Vector2(-0.897052, 0.0150347)
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.890196, 0.760784, 0.988235, 1)
+
+[node name="Boundaries" type="Node2D" parent="."]
+
+[node name="TopBoundary" type="StaticBody2D" parent="Boundaries"]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/TopBoundary"]
+position = Vector2(573.5, 0)
+shape = SubResource("RectangleShape2D_yqjtg")
+
+[node name="BottomBoundary" type="StaticBody2D" parent="Boundaries"]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/BottomBoundary"]
+position = Vector2(574, 643)
+shape = SubResource("RectangleShape2D_yqjtg")
+
+[node name="LeftBoundary" type="StaticBody2D" parent="Boundaries"]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/LeftBoundary"]
+position = Vector2(-1, 319.25)
+shape = SubResource("RectangleShape2D_lnu2h")
+
+[node name="RightBoundary" type="StaticBody2D" parent="Boundaries"]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/RightBoundary"]
+position = Vector2(1151, 319.25)
+shape = SubResource("RectangleShape2D_lnu2h")
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="Wall" parent="Walls" instance=ExtResource("1_ilhis")]
+position = Vector2(225, 483)
+
+[node name="Wall14" parent="Walls" instance=ExtResource("1_ilhis")]
+position = Vector2(289, 483)
+
+[node name="Wall15" parent="Walls" instance=ExtResource("1_ilhis")]
+position = Vector2(354, 483)
+
+[node name="Wall16" parent="Walls" instance=ExtResource("1_ilhis")]
+position = Vector2(417, 483)
+
+[node name="Wall17" parent="Walls" instance=ExtResource("1_ilhis")]
+position = Vector2(480, 483)
+
+[node name="Wall18" parent="Walls" instance=ExtResource("1_ilhis")]
+position = Vector2(545, 483)
+
+[node name="Wall19" parent="Walls" instance=ExtResource("1_ilhis")]
+position = Vector2(608, 483)
+
+[node name="Wall9" parent="Walls" instance=ExtResource("1_ilhis")]
+position = Vector2(672, 483)
+
+[node name="Wall10" parent="Walls" instance=ExtResource("1_ilhis")]
+position = Vector2(736, 483)
+
+[node name="Wall11" parent="Walls" instance=ExtResource("1_ilhis")]
+position = Vector2(800, 483)
+
+[node name="Wall20" parent="Walls" instance=ExtResource("1_ilhis")]
+position = Vector2(865, 483)
+
+[node name="Wall21" parent="Walls" instance=ExtResource("1_ilhis")]
+position = Vector2(288, 172)
+
+[node name="Wall22" parent="Walls" instance=ExtResource("1_ilhis")]
+position = Vector2(353, 172)
+
+[node name="Wall23" parent="Walls" instance=ExtResource("1_ilhis")]
+position = Vector2(416, 172)
+
+[node name="Wall24" parent="Walls" instance=ExtResource("1_ilhis")]
+position = Vector2(479, 172)
+
+[node name="Wall25" parent="Walls" instance=ExtResource("1_ilhis")]
+position = Vector2(544, 172)
+
+[node name="Wall26" parent="Walls" instance=ExtResource("1_ilhis")]
+position = Vector2(607, 172)
+
+[node name="Wall27" parent="Walls" instance=ExtResource("1_ilhis")]
+position = Vector2(671, 172)
+
+[node name="Wall28" parent="Walls" instance=ExtResource("1_ilhis")]
+position = Vector2(735, 172)
+
+[node name="Wall29" parent="Walls" instance=ExtResource("1_ilhis")]
+position = Vector2(799, 172)
+
+[node name="Wall30" parent="Walls" instance=ExtResource("1_ilhis")]
+position = Vector2(864, 172)
+
+[node name="Wall2" parent="Walls" instance=ExtResource("1_ilhis")]
+position = Vector2(225, 42)
+
+[node name="Wall3" parent="Walls" instance=ExtResource("1_ilhis")]
+position = Vector2(225, 107)
+
+[node name="Wall4" parent="Walls" instance=ExtResource("1_ilhis")]
+position = Vector2(225, 170)
+
+[node name="Wall5" parent="Walls" instance=ExtResource("1_ilhis")]
+position = Vector2(225, 230)
+
+[node name="Wall6" parent="Walls" instance=ExtResource("1_ilhis")]
+position = Vector2(225, 290)
+
+[node name="Wall7" parent="Walls" instance=ExtResource("1_ilhis")]
+position = Vector2(225, 355)
+
+[node name="Wall8" parent="Walls" instance=ExtResource("1_ilhis")]
+position = Vector2(225, 419)
+
+[node name="Wall31" parent="Walls" instance=ExtResource("1_ilhis")]
+position = Vector2(225, 230)
+
+[node name="Wall32" parent="Walls" instance=ExtResource("1_ilhis")]
+position = Vector2(225, 290)
+
+[node name="Wall33" parent="Walls" instance=ExtResource("1_ilhis")]
+position = Vector2(225, 355)
+
+[node name="Wall34" parent="Walls" instance=ExtResource("1_ilhis")]
+position = Vector2(225, 419)
+
+[node name="Wall35" parent="Walls" instance=ExtResource("1_ilhis")]
+position = Vector2(928, 233)
+
+[node name="Wall39" parent="Walls" instance=ExtResource("1_ilhis")]
+position = Vector2(928, 172)
+
+[node name="Wall36" parent="Walls" instance=ExtResource("1_ilhis")]
+position = Vector2(928, 293)
+
+[node name="Wall37" parent="Walls" instance=ExtResource("1_ilhis")]
+position = Vector2(928, 358)
+
+[node name="Wall38" parent="Walls" instance=ExtResource("1_ilhis")]
+position = Vector2(928, 422)
+
+[node name="Wall40" parent="Walls" instance=ExtResource("1_ilhis")]
+position = Vector2(928, 483)
+
+[node name="Player" parent="." instance=ExtResource("2_ep78u")]
+position = Vector2(93, 72)
+
+[node name="Light" parent="." instance=ExtResource("3_dfjjl")]
+position = Vector2(580, 328)
+rotation = -0.644027
+color_light = Color(0, 1, 0, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_p57ef")
+}
+autoplay = "360"
+
+[node name="Goal" parent="." instance=ExtResource("5_sd18g")]
+position = Vector2(338, 72)
+
+[node name="Barriers" type="Node2D" parent="."]
+
+[node name="Barrier" parent="Barriers" instance=ExtResource("4_at1ld")]
+position = Vector2(141, 318)
+scale = Vector2(3.8, 2.5)
+barrier_color = Color(1, 0, 0, 1)
+
+[node name="Barrier3" parent="Barriers" instance=ExtResource("4_at1ld")]
+position = Vector2(573, 536)
+rotation = 1.5708
+scale = Vector2(3, 1.5)
+barrier_color = Color(1, 0, 0, 1)
+
+[node name="Barrier4" parent="Barriers" instance=ExtResource("4_at1ld")]
+position = Vector2(571, 111)
+rotation = 1.5708
+scale = Vector2(3, 1.5)
+barrier_color = Color(1, 0, 0, 1)
+
+[node name="Barrier2" parent="Barriers" instance=ExtResource("4_at1ld")]
+position = Vector2(1009, 318)
+scale = Vector2(3.8, 2.5)
+barrier_color = Color(1, 0, 0, 1)

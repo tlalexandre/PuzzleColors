@@ -1,14 +1,15 @@
-[gd_scene load_steps=13 format=3 uid="uid://b5eve0drebuc7"]
+[gd_scene load_steps=14 format=3 uid="uid://b5eve0drebuc7"]
 
 [ext_resource type="PackedScene" uid="uid://dhvvehmyuwrgs" path="res://scenes/wall.tscn" id="1_n46q3"]
 [ext_resource type="PackedScene" uid="uid://d1esa4j588q6j" path="res://scenes/player.tscn" id="2_btoec"]
 [ext_resource type="PackedScene" uid="uid://nrvnd2jy2qm" path="res://scenes/light.tscn" id="3_gwceb"]
 [ext_resource type="PackedScene" uid="uid://uvswqh21mlhb" path="res://scenes/barrier.tscn" id="4_l53as"]
 [ext_resource type="PackedScene" uid="uid://dwqoch6qgogbj" path="res://scenes/goal.tscn" id="5_3sk1a"]
+[ext_resource type="PackedScene" uid="uid://c2a7cwna6x0db" path="res://scenes/concav_lens.tscn" id="6_btoec"]
 
 [sub_resource type="Gradient" id="Gradient_8cj0n"]
 offsets = PackedFloat32Array(1)
-colors = PackedColorArray(0.572988, 0.572988, 0.572988, 1)
+colors = PackedColorArray(1, 1, 1, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_uwrxv"]
 gradient = SubResource("Gradient_8cj0n")
@@ -65,6 +66,9 @@ position = Vector2(1611, 314)
 scale = Vector2(1153.5, 648.5)
 texture = SubResource("GradientTexture2D_uwrxv")
 offset = Vector2(-0.897052, 0.0150347)
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.779087, 0.87454, 1, 1)
 
 [node name="Boundaries" type="Node2D" parent="."]
 
@@ -142,10 +146,10 @@ position = Vector2(571, 166)
 position = Vector2(571, 104)
 
 [node name="Player" parent="." instance=ExtResource("2_btoec")]
-position = Vector2(196, 87)
+position = Vector2(229, 268)
 
 [node name="Light" parent="." instance=ExtResource("3_gwceb")]
-position = Vector2(959, 630)
+position = Vector2(1020, 634)
 rotation = -0.644027
 color_light = Color(0, 1, 0, 1)
 
@@ -162,3 +166,7 @@ autoplay = "rotating_light"
 
 [node name="Goal" parent="." instance=ExtResource("5_3sk1a")]
 position = Vector2(1068, 84)
+
+[node name="ConcavLens" parent="." instance=ExtResource("6_btoec")]
+position = Vector2(326, 522)
+scale = Vector2(0.439999, 0.439999)
