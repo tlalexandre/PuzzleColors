@@ -6,7 +6,7 @@ var active_lights: Dictionary = {}  # source_node -> color
 @onready var light_occluder_2d: LightOccluder2D = $LightOccluder2D
 var original_occluder: OccluderPolygon2D
 
-# Hysteresis thresholds - different values for becoming white vs becoming non-white
+# Hysteresis thresholds
 var white_threshold: float = 0.9      # Need 0.9+ in all channels to become white
 var non_white_threshold: float = 0.7  # Need to drop below 0.7 in any channel to become non-white
 var is_currently_white: bool = false
@@ -21,6 +21,7 @@ func _process(delta: float) -> void:
 
 func add_light(source_node, light_color: Color):
 	active_lights[source_node] = light_color
+	
 
 func remove_light(source_node):
 	if source_node in active_lights:
@@ -40,22 +41,25 @@ func update_color():
 func update_collision():
 	var current_color = color_rect.color
 	
-	# Hysteresis logic: different thresholds for becoming white vs non-white
+	# Hysteresis logic
 	if not is_currently_white:
-		# Not white yet - check if we should become white (high threshold)
 		if current_color.r >= white_threshold and current_color.g >= white_threshold and current_color.b >= white_threshold:
 			is_currently_white = true
 	else:
-		# Currently white - check if we should become non-white (low threshold)
 		if current_color.r < non_white_threshold or current_color.g < non_white_threshold or current_color.b < non_white_threshold:
 			is_currently_white = false
 	
-	# Apply collision based on stable white state
+	# Apply collision based on white state
 	if is_currently_white:
 		static_body.set_collision_layer_value(3, false)  # Player can pass through
-		static_body.set_collision_layer_value(5, true)   # Raycasts still detect
-		light_occluder_2d.occluder = null
+		# Keep collision layer 5 active so raycasts can still detect this barrier
+		static_body.set_collision_layer_value(5, true)   
+		light_occluder_2d.occluder = null                # Light passes through
 	else:
 		static_body.set_collision_layer_value(3, true)   # Player blocked
-		static_body.set_collision_layer_value(5, true)   # Raycasts still detect
-		light_occluder_2d.occluder = original_occluder
+		static_body.set_collision_layer_value(5, true)   # Raycasts detect barrier
+		light_occluder_2d.occluder = original_occluder   # Light blocked
+
+# This method tells the light system whether this barrier should block further ray detection
+func should_block_light() -> bool:
+	return not is_currently_white

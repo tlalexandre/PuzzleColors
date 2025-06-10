@@ -21,8 +21,8 @@ gradient = SubResource("Gradient_bg5kb")
 script = ExtResource("1_lr36a")
 
 [node name="TorchLight" type="PointLight2D" parent="."]
-position = Vector2(-2, -18.0444)
-scale = Vector2(0.90625, 12.6875)
+position = Vector2(-2, -22.3777)
+scale = Vector2(0.90625, 15.7344)
 color = Color(0, 0.678647, 0.680372, 1)
 energy = 15.0
 shadow_enabled = true
@@ -34,20 +34,20 @@ offset = Vector2(-1.10345, -30.5778)
 
 [node name="RayCast2D3" type="RayCast2D" parent="Raycasts"]
 position = Vector2(-27, 0)
-target_position = Vector2(0, -642)
+target_position = Vector2(0, -1000)
 collision_mask = 82
 hit_from_inside = true
 collide_with_areas = true
 
 [node name="RayCast2D4" type="RayCast2D" parent="Raycasts"]
-target_position = Vector2(0, -656)
+target_position = Vector2(0, -1000)
 collision_mask = 82
 hit_from_inside = true
 collide_with_areas = true
 
 [node name="RayCast2D5" type="RayCast2D" parent="Raycasts"]
 position = Vector2(23, 0)
-target_position = Vector2(0, -648)
+target_position = Vector2(0, -1000)
 collision_mask = 82
 hit_from_inside = true
 collide_with_areas = true
