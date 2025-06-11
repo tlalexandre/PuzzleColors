@@ -1,15 +1,14 @@
-[gd_scene load_steps=14 format=3 uid="uid://b5eve0drebuc7"]
+[gd_scene load_steps=13 format=3 uid="uid://b5eve0drebuc7"]
 
 [ext_resource type="PackedScene" uid="uid://dhvvehmyuwrgs" path="res://scenes/wall.tscn" id="1_n46q3"]
 [ext_resource type="PackedScene" uid="uid://d1esa4j588q6j" path="res://scenes/player.tscn" id="2_btoec"]
 [ext_resource type="PackedScene" uid="uid://nrvnd2jy2qm" path="res://scenes/light.tscn" id="3_gwceb"]
 [ext_resource type="PackedScene" uid="uid://uvswqh21mlhb" path="res://scenes/barrier.tscn" id="4_l53as"]
 [ext_resource type="PackedScene" uid="uid://dwqoch6qgogbj" path="res://scenes/goal.tscn" id="5_3sk1a"]
-[ext_resource type="PackedScene" uid="uid://c2a7cwna6x0db" path="res://scenes/concav_lens.tscn" id="6_btoec"]
 
 [sub_resource type="Gradient" id="Gradient_8cj0n"]
 offsets = PackedFloat32Array(1)
-colors = PackedColorArray(1, 1, 1, 1)
+colors = PackedColorArray(1, 0.693333, 0.6, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_uwrxv"]
 gradient = SubResource("Gradient_8cj0n")
@@ -26,7 +25,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Light:rotation")
+tracks/0/path = NodePath("GameplayLayer/Light:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -43,7 +42,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Light:rotation")
+tracks/0/path = NodePath("GameplayLayer/Light:rotation")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -61,112 +60,114 @@ _data = {
 
 [node name="Level1" type="Node2D"]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="BackgroundLayer" type="Node2D" parent="."]
+z_index = -1
+
+[node name="Sprite2D" type="Sprite2D" parent="BackgroundLayer"]
 position = Vector2(1611, 314)
 scale = Vector2(1153.5, 648.5)
 texture = SubResource("GradientTexture2D_uwrxv")
 offset = Vector2(-0.897052, 0.0150347)
 
-[node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color(0.779087, 0.87454, 1, 1)
+[node name="CanvasModulate" type="CanvasModulate" parent="BackgroundLayer"]
+color = Color(0.899258, 0.899258, 0.899258, 1)
 
-[node name="Boundaries" type="Node2D" parent="."]
+[node name="Boundaries" type="Node2D" parent="BackgroundLayer"]
 
-[node name="TopBoundary" type="StaticBody2D" parent="Boundaries"]
+[node name="TopBoundary" type="StaticBody2D" parent="BackgroundLayer/Boundaries"]
 collision_layer = 8
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/TopBoundary"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BackgroundLayer/Boundaries/TopBoundary"]
 position = Vector2(573.5, 0)
 shape = SubResource("RectangleShape2D_yqjtg")
 
-[node name="BottomBoundary" type="StaticBody2D" parent="Boundaries"]
+[node name="BottomBoundary" type="StaticBody2D" parent="BackgroundLayer/Boundaries"]
 collision_layer = 8
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/BottomBoundary"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BackgroundLayer/Boundaries/BottomBoundary"]
 position = Vector2(574, 643)
 shape = SubResource("RectangleShape2D_yqjtg")
 
-[node name="LeftBoundary" type="StaticBody2D" parent="Boundaries"]
+[node name="LeftBoundary" type="StaticBody2D" parent="BackgroundLayer/Boundaries"]
 collision_layer = 8
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/LeftBoundary"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BackgroundLayer/Boundaries/LeftBoundary"]
 position = Vector2(-1, 319.25)
 shape = SubResource("RectangleShape2D_lnu2h")
 
-[node name="RightBoundary" type="StaticBody2D" parent="Boundaries"]
+[node name="RightBoundary" type="StaticBody2D" parent="BackgroundLayer/Boundaries"]
 collision_layer = 8
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/RightBoundary"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BackgroundLayer/Boundaries/RightBoundary"]
 position = Vector2(1151, 319.25)
 shape = SubResource("RectangleShape2D_lnu2h")
 
-[node name="Walls" type="Node2D" parent="."]
+[node name="GameplayLayer" type="Node2D" parent="."]
+visibility_layer = 2
 
-[node name="Wall" parent="Walls" instance=ExtResource("1_n46q3")]
+[node name="Walls" type="Node2D" parent="GameplayLayer"]
+
+[node name="Wall" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
 position = Vector2(571, 40)
 
-[node name="Wall9" parent="Walls" instance=ExtResource("1_n46q3")]
+[node name="Wall9" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
 position = Vector2(572, 480)
 
-[node name="Wall10" parent="Walls" instance=ExtResource("1_n46q3")]
+[node name="Wall10" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
 position = Vector2(570, 543)
 
-[node name="Wall11" parent="Walls" instance=ExtResource("1_n46q3")]
+[node name="Wall11" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
 position = Vector2(571, 605)
 
-[node name="Wall12" parent="Walls" instance=ExtResource("1_n46q3")]
+[node name="Wall12" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
 position = Vector2(571, 40)
 
-[node name="Wall13" parent="Walls" instance=ExtResource("1_n46q3")]
+[node name="Wall13" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
 position = Vector2(571, 40)
 
-[node name="Wall2" parent="Walls" instance=ExtResource("1_n46q3")]
+[node name="Wall2" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
 position = Vector2(379, 289)
 
-[node name="Wall3" parent="Walls" instance=ExtResource("1_n46q3")]
+[node name="Wall3" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
 position = Vector2(443, 289)
 
-[node name="Wall4" parent="Walls" instance=ExtResource("1_n46q3")]
+[node name="Wall4" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
 position = Vector2(508, 289)
 
-[node name="Wall5" parent="Walls" instance=ExtResource("1_n46q3")]
+[node name="Wall5" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
 position = Vector2(571, 288)
 
-[node name="Wall6" parent="Walls" instance=ExtResource("1_n46q3")]
+[node name="Wall6" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
 position = Vector2(571, 228)
 
-[node name="Wall7" parent="Walls" instance=ExtResource("1_n46q3")]
+[node name="Wall7" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
 position = Vector2(571, 166)
 
-[node name="Wall8" parent="Walls" instance=ExtResource("1_n46q3")]
+[node name="Wall8" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
 position = Vector2(571, 104)
 
-[node name="Player" parent="." instance=ExtResource("2_btoec")]
+[node name="Player" parent="GameplayLayer" instance=ExtResource("2_btoec")]
 position = Vector2(229, 268)
 
-[node name="Light" parent="." instance=ExtResource("3_gwceb")]
+[node name="Light" parent="GameplayLayer" instance=ExtResource("3_gwceb")]
 position = Vector2(1020, 634)
 rotation = -0.644027
 color_light = Color(0, 1, 0, 1)
 
-[node name="Barrier" parent="." instance=ExtResource("4_l53as")]
+[node name="Barrier" parent="GameplayLayer" instance=ExtResource("4_l53as")]
 position = Vector2(570, 385)
 rotation = 1.5708
 barrier_color = Color(1, 0, 0, 1)
+
+[node name="Goal" parent="GameplayLayer" instance=ExtResource("5_3sk1a")]
+position = Vector2(1068, 84)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_p57ef")
 }
 autoplay = "rotating_light"
-
-[node name="Goal" parent="." instance=ExtResource("5_3sk1a")]
-position = Vector2(1068, 84)
-
-[node name="ConcavLens" parent="." instance=ExtResource("6_btoec")]
-position = Vector2(326, 522)
-scale = Vector2(0.439999, 0.439999)

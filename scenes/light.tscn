@@ -13,6 +13,19 @@ color = Color(0, 0.678647, 0.680372, 1)
 energy = 5.0
 shadow_enabled = true
 shadow_filter = 1
+shadow_filter_smooth = 10.0
+texture = ExtResource("1_24oxn")
+offset = Vector2(1.12796, -494.646)
+
+[node name="TorchLight2" type="PointLight2D" parent="."]
+position = Vector2(0, 0.081442)
+scale = Vector2(0.450791, 0.661633)
+color = Color(0, 0.678647, 0.680372, 1)
+energy = 5.0
+blend_mode = 2
+shadow_enabled = true
+shadow_filter = 1
+shadow_filter_smooth = 10.0
 texture = ExtResource("1_24oxn")
 offset = Vector2(1.12796, -494.646)
 

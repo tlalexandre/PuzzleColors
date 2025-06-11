@@ -96,14 +96,7 @@ func get_multiple_collisions(raycast: RayCast2D) -> Array:
 			break
 			
 		iteration += 1
-	
-	# Debug output
-	if results.size() > 1:
-		print("Multi-collision detected: ", results.size(), " hits")
-		for i in range(results.size()):
-			var hit = results[i]
-			if hit.collider:
-				print("  Hit ", i, ": ", hit.collider.get_parent().name if hit.collider.get_parent() else "unknown")
+		
 	
 	return results
 

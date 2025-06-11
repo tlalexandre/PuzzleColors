@@ -1,15 +1,17 @@
 extends Node2D
 @export var barrier_color: Color = Color.RED
+@export var target_color: Color = Color.WHITE
+@export var color_tolerance: float = 0.15
 var active_lights: Dictionary = {}  # source_node -> color
 @onready var color_rect: ColorRect = $ColorRect
 @onready var static_body: StaticBody2D = $StaticBody2D
 @onready var light_occluder_2d: LightOccluder2D = $LightOccluder2D
 var original_occluder: OccluderPolygon2D
 
-# Hysteresis thresholds
-var white_threshold: float = 0.9      # Need 0.9+ in all channels to become white
-var non_white_threshold: float = 0.7  # Need to drop below 0.7 in any channel to become non-white
-var is_currently_white: bool = false
+# Hysteresis thresholds to prevent flickering
+var match_threshold: float = 0.15      # Need to be within this distance to become passable
+var no_match_threshold: float = 0.25   # Need to be further than this to become non-passable
+var is_currently_passable: bool = false
 
 func _ready() -> void:
 	color_rect.color = barrier_color
@@ -22,7 +24,6 @@ func _process(delta: float) -> void:
 func add_light(source_node, light_color: Color):
 	active_lights[source_node] = light_color
 	
-
 func remove_light(source_node):
 	if source_node in active_lights:
 		active_lights.erase(source_node)
@@ -38,22 +39,31 @@ func update_color():
 	
 	color_rect.color = final_color
 
+func is_color_match(current: Color, target: Color, tolerance: float) -> bool:
+	var distance = sqrt(
+		pow(current.r - target.r, 2) + 
+		pow(current.g - target.g, 2) + 
+		pow(current.b - target.b, 2)
+	)
+	return distance < tolerance
+
 func update_collision():
 	var current_color = color_rect.color
 	
-	# Hysteresis logic
-	if not is_currently_white:
-		if current_color.r >= white_threshold and current_color.g >= white_threshold and current_color.b >= white_threshold:
-			is_currently_white = true
+	# Hysteresis logic: different thresholds for becoming passable vs non-passable
+	if not is_currently_passable:
+		# Not passable yet - check if we should become passable (stricter threshold)
+		if is_color_match(current_color, target_color, match_threshold):
+			is_currently_passable = true
 	else:
-		if current_color.r < non_white_threshold or current_color.g < non_white_threshold or current_color.b < non_white_threshold:
-			is_currently_white = false
+		# Currently passable - check if we should become non-passable (looser threshold)
+		if not is_color_match(current_color, target_color, no_match_threshold):
+			is_currently_passable = false
 	
-	# Apply collision based on white state
-	if is_currently_white:
+	# Apply collision based on passable state
+	if is_currently_passable:
 		static_body.set_collision_layer_value(3, false)  # Player can pass through
-		# Keep collision layer 5 active so raycasts can still detect this barrier
-		static_body.set_collision_layer_value(5, true)   
+		static_body.set_collision_layer_value(5, true)   # Raycasts can still detect
 		light_occluder_2d.occluder = null                # Light passes through
 	else:
 		static_body.set_collision_layer_value(3, true)   # Player blocked
@@ -62,4 +72,27 @@ func update_collision():
 
 # This method tells the light system whether this barrier should block further ray detection
 func should_block_light() -> bool:
-	return not is_currently_white
+	return not is_currently_passable
+
+# Helper function to set common target colors easily in code
+func set_target_color_preset(preset: String):
+	match preset.to_lower():
+		"white":
+			target_color = Color.WHITE
+		"cyan":
+			target_color = Color.CYAN
+		"yellow":
+			target_color = Color.YELLOW
+		"magenta":
+			target_color = Color.MAGENTA
+		_:
+			print("Unknown color preset: ", preset)
+			
+# Helper function to get color distance for debugging
+func get_color_distance_to_target() -> float:
+	var current_color = color_rect.color
+	return sqrt(
+		pow(current_color.r - target_color.r, 2) + 
+		pow(current_color.g - target_color.g, 2) + 
+		pow(current_color.b - target_color.b, 2)
+	)

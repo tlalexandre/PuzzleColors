@@ -23,8 +23,8 @@ script = ExtResource("1_lr36a")
 [node name="TorchLight" type="PointLight2D" parent="."]
 position = Vector2(-2, -22.3777)
 scale = Vector2(0.90625, 15.7344)
-color = Color(0, 0.678647, 0.680372, 1)
-energy = 15.0
+energy = 20.0
+blend_mode = 2
 shadow_enabled = true
 shadow_filter = 1
 texture = SubResource("GradientTexture2D_brou0")
