@@ -1,4 +1,4 @@
-# area_light.gd - Fixed version
+# area_light.gd - Fixed collision shape alignment with immediate barrier response
 extends Node2D
 class_name AreaLight
 
@@ -16,9 +16,9 @@ class_name AreaLight
 var light_id: String = ""
 var objects_in_area: Array = []
 var confirmed_lit_objects: Array = []
+var connected_barriers: Array = []  # Track which barriers we're listening to
 
 func _ready() -> void:
-	
 	# Apply initial values
 	torch_light.color = color_light
 	setup_light_detection_area()
@@ -30,9 +30,7 @@ func _ready() -> void:
 		
 	await get_tree().create_timer(0.5).timeout
 
-
 func setup_light_detection_area():
-
 	update_light_cone()
 
 func connect_signals():
@@ -44,24 +42,24 @@ func connect_signals():
 		light_area.body_entered.connect(_on_body_entered)
 	if not light_area.body_exited.is_connected(_on_body_exited):
 		light_area.body_exited.connect(_on_body_exited)
-	
 
 func update_light_cone():
 	if not collision_polygon:
 		return
 	
-	# Temporary small cone to match your blue light
 	var points = PackedVector2Array()
-	var cone_angle_rad = deg_to_rad(cone_angle_degrees)  # Much smaller angle
-	var cone_length = cone_length  # Much shorter length
+	var cone_angle_rad = deg_to_rad(cone_angle_degrees)
 	
+	# Start at the origin (light source)
 	points.append(Vector2.ZERO)
 	
 	var steps = 8
 	for i in range(steps + 1):
 		var angle_offset = -cone_angle_rad/2 + (cone_angle_rad * i / steps)
-		var final_angle = rotation + angle_offset
-		var point = Vector2(cos(final_angle), sin(final_angle)) * cone_length
+		
+		# FIXED: Don't add rotation here since Area2D inherits rotation from parent
+		# The collision shape will automatically rotate with the parent node
+		var point = Vector2(sin(angle_offset), -cos(angle_offset)) * cone_length
 		points.append(point)
 	
 	collision_polygon.polygon = points
@@ -86,12 +84,26 @@ func _on_area_entered(area: Area2D):
 	if parent.is_in_group("barriers") or parent.is_in_group("lenses"):
 		if not parent in objects_in_area:
 			objects_in_area.append(parent)
+			
+			# Connect to barrier state changes if it's a barrier
+			if parent.is_in_group("barriers") and parent.has_signal("passable_state_changed"):
+				if not parent in connected_barriers:
+					parent.passable_state_changed.connect(_on_barrier_state_changed)
+					connected_barriers.append(parent)
+		
 		update_line_of_sight_check()
 
 func _on_area_exited(area: Area2D):
 	var parent = area.get_parent()
 	if parent in objects_in_area:
 		objects_in_area.erase(parent)
+		
+		# Disconnect from barrier if needed
+		if parent in connected_barriers:
+			if parent.passable_state_changed.is_connected(_on_barrier_state_changed):
+				parent.passable_state_changed.disconnect(_on_barrier_state_changed)
+			connected_barriers.erase(parent)
+		
 		if parent in confirmed_lit_objects:
 			confirmed_lit_objects.erase(parent)
 			_handle_object_unlit(parent)
@@ -102,16 +114,35 @@ func _on_body_entered(body: Node2D):
 	if parent and (parent.is_in_group("barriers") or parent.is_in_group("lenses")):
 		if not parent in objects_in_area:
 			objects_in_area.append(parent)
+			
+			# Connect to barrier state changes if it's a barrier
+			if parent.is_in_group("barriers") and parent.has_signal("passable_state_changed"):
+				if not parent in connected_barriers:
+					parent.passable_state_changed.connect(_on_barrier_state_changed)
+					connected_barriers.append(parent)
+		
 		update_line_of_sight_check()
 
 func _on_body_exited(body: Node2D):
 	var parent = body.get_parent()
 	if parent and parent in objects_in_area:
 		objects_in_area.erase(parent)
+		
+		# Disconnect from barrier if needed
+		if parent in connected_barriers:
+			if parent.passable_state_changed.is_connected(_on_barrier_state_changed):
+				parent.passable_state_changed.disconnect(_on_barrier_state_changed)
+			connected_barriers.erase(parent)
+		
 		if parent in confirmed_lit_objects:
 			confirmed_lit_objects.erase(parent)
 			_handle_object_unlit(parent)
 		update_line_of_sight_check()
+
+# New function - immediate recheck when barriers change
+func _on_barrier_state_changed():
+	"""Force immediate line-of-sight recheck when any barrier changes state"""
+	update_line_of_sight_check()
 
 func update_line_of_sight_check():
 	var new_confirmed_objects = []
@@ -142,7 +173,6 @@ func has_line_of_sight_to_object(target_object: Node2D) -> bool:
 		var check_point = check_points[i]
 		if _is_point_visible(global_position, check_point, target_object):
 			visible_points += 1
-
 	
 	var threshold = check_points.size() / 2.0
 	var is_visible = visible_points >= threshold
@@ -235,10 +265,6 @@ func _handle_object_unlit(obj: Node2D):
 		LightManager.remove_light_from_barrier(self, obj)
 
 func _process(delta):
-	# Update cone rotation
-	#if light_area:
-		#light_area.rotation = rotation
-	
 	# Periodic line of sight check (less frequent for performance)
 	if Engine.get_process_frames() % 5 == 0:
 		update_line_of_sight_check()
@@ -290,6 +316,13 @@ func cleanup_connections():
 			light_area.body_entered.disconnect(_on_body_entered)
 		if light_area.body_exited.is_connected(_on_body_exited):
 			light_area.body_exited.disconnect(_on_body_exited)
+	
+	# Clean up barrier connections
+	for barrier in connected_barriers:
+		if is_instance_valid(barrier) and barrier.has_signal("passable_state_changed"):
+			if barrier.passable_state_changed.is_connected(_on_barrier_state_changed):
+				barrier.passable_state_changed.disconnect(_on_barrier_state_changed)
+	connected_barriers.clear()
 
 func _exit_tree():
 	cleanup_connections()

@@ -1,6 +1,9 @@
 # barrier.gd - Timer-based solution with ColorRect visual feedback
 extends Node2D
 
+# Add this single signal - that's it!
+signal passable_state_changed
+
 @export var barrier_color: Color = Color.RED
 @export var target_color: Color = Color.WHITE : set = set_target_color
 @export var color_tolerance: float = 0.15
@@ -105,6 +108,8 @@ func update_collision():
 			print("Barrier became solid (timer expired)")
 
 func apply_collision_state():
+	var previous_state = is_currently_passable
+	
 	if is_currently_passable:
 		static_body.set_collision_layer_value(3, false)  # Player can pass through
 		static_body.set_collision_layer_value(5, true)   # Keep light detection
@@ -115,6 +120,10 @@ func apply_collision_state():
 		static_body.set_collision_layer_value(5, true)   # Light detection
 		light_occluder_2d.occluder = original_occluder   # Light blocked
 		update_outline_opacity(outline_opacity)
+	
+	# Only change: emit signal when state changes
+	if previous_state != is_currently_passable:
+		passable_state_changed.emit()
 
 # Manual control functions for testing
 func extend_timer(additional_time: float = 2.0):

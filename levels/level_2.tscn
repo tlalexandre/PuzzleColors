@@ -437,3 +437,4 @@ barrier_color = Color(1, 0, 0, 1)
 
 [node name="Area2dLight" parent="." instance=ExtResource("5_5722l")]
 position = Vector2(580, 322)
+color_light = Color(0, 1, 0, 1)

@@ -21,6 +21,6 @@ func _physics_process(delta: float) -> void:
 	# Make torchlight face mouse position
 	var mouse_pos = get_global_mouse_position()
 	var direction_to_mouse = global_position.direction_to(mouse_pos)
-	area_2d_light.rotation = direction_to_mouse.angle() + deg_to_rad(90)
+	area_2d_light.rotation = direction_to_mouse.angle()
 	
 	move_and_slide()
