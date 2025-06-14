@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://b3avnyoue3pq7"]
+
+[ext_resource type="Script" uid="uid://3lvu7qelgl05" path="res://scripts/area_light.gd" id="1_1mgcr"]
+[ext_resource type="Texture2D" uid="uid://q2elxb6owi1p" path="res://assets/1x/1x/Fichier 2.png" id="2_r22jg"]
+
+[node name="Area2dLight" type="Node2D"]
+script = ExtResource("1_1mgcr")
+cone_angle_degrees = 45.0
+cone_length = 400.0
+debug_occlusion = true
+
+[node name="TorchLight" type="PointLight2D" parent="."]
+scale = Vector2(0.376953, 0.946083)
+color = Color(0, 0.678647, 0.680372, 1)
+energy = 20.0
+blend_mode = 2
+shadow_enabled = true
+shadow_filter = 1
+shadow_filter_smooth = 10.0
+texture = ExtResource("2_r22jg")
+offset = Vector2(1.12796, -494.646)
+
+[node name="LightDetectionArea" type="Area2D" parent="."]
+rotation = -1.5708
+collision_layer = 0
+collision_mask = 6
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="LightDetectionArea"]
+position = Vector2(-4, 1)
+scale = Vector2(2.05208, 1.71865)
+polygon = PackedVector2Array(-12, 0, 15, 0, 124.264, -288.017, 1.94924, -380.531, -118.416, -289.181)

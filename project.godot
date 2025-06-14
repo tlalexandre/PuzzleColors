@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 LevelManager="*res://singletons/level_manager.gd"
 GridSystem="*res://singletons/grid_system.gd"
+LightManager="*res://singletons/light_manager.gd"
 
 [display]
 

@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://uvswqh21mlhb" path="res://scenes/barrier.tscn" id="2_rqsg2"]
 [ext_resource type="PackedScene" uid="uid://d1esa4j588q6j" path="res://scenes/player.tscn" id="3_fpvgn"]
 [ext_resource type="PackedScene" uid="uid://dwqoch6qgogbj" path="res://scenes/goal.tscn" id="4_xn6mk"]
-[ext_resource type="PackedScene" uid="uid://dx4qhnxp3nolb" path="res://scenes/straight_light.tscn" id="5_3t5n2"]
+[ext_resource type="PackedScene" uid="uid://b3avnyoue3pq7" path="res://scenes/area2d_light.tscn" id="5_8tsbn"]
 
 [sub_resource type="Gradient" id="Gradient_8cj0n"]
 offsets = PackedFloat32Array(1)
@@ -140,7 +140,6 @@ position = Vector2(960, 320)
 rotation = 1.5708
 scale = Vector2(1, 1)
 barrier_color = Color(0.0156863, 1, 0, 1)
-target_color = Color(1, 1, 0, 1)
 
 [node name="Player" parent="." instance=ExtResource("3_fpvgn")]
 position = Vector2(99, 550)
@@ -156,8 +155,8 @@ position = Vector2(1080, 319)
 
 [node name="Lights" type="Node2D" parent="."]
 
-[node name="StraightLight" parent="Lights" instance=ExtResource("5_3t5n2")]
-position = Vector2(76, 322)
+[node name="Area2dLight" parent="Lights" instance=ExtResource("5_8tsbn")]
+position = Vector2(146, 321)
 rotation = 1.5708
 color_light = Color(1, 0, 0, 1)
 

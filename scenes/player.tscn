@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://d1esa4j588q6j"]
 
 [ext_resource type="Script" uid="uid://ba1ccv4yyfjrb" path="res://scripts/player.gd" id="1_3vyb7"]
-[ext_resource type="PackedScene" uid="uid://dx4qhnxp3nolb" path="res://scenes/straight_light.tscn" id="3_qhqgy"]
+[ext_resource type="PackedScene" uid="uid://b3avnyoue3pq7" path="res://scenes/area2d_light.tscn" id="3_dqkch"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_u8vuu"]
 radius = 30.0
@@ -26,6 +26,5 @@ shape = SubResource("CircleShape2D_u8vuu")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = SubResource("GradientTexture2D_3vyb7")
 
-[node name="StraightLight" parent="." instance=ExtResource("3_qhqgy")]
-rotation = 4.18879
-color_light = Color(0, 0, 1, 1)
+[node name="Area2dLight" parent="." instance=ExtResource("3_dqkch")]
+color_light = Color(0.0156863, 0, 1, 1)

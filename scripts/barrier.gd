@@ -1,3 +1,4 @@
+# barrier.gd - Timer-based solution with ColorRect visual feedback
 extends Node2D
 
 @export var barrier_color: Color = Color.RED
@@ -5,46 +6,71 @@ extends Node2D
 @export var color_tolerance: float = 0.15
 @export var show_target_outline: bool = true : set = set_show_target_outline
 @export var outline_opacity: float = 0.8 : set = set_outline_opacity
+@export var passable_duration: float = 3.0  # How long to stay passable once activated
 
-var active_lights: Dictionary = {}  # source_node -> color
 @onready var color_rect: ColorRect = $ColorRect
 @onready var static_body: StaticBody2D = $StaticBody2D
 @onready var light_occluder_2d: LightOccluder2D = $LightOccluder2D
 @onready var target_outline: Sprite2D = $TargetOutline
 
 var original_occluder: OccluderPolygon2D
-
-# Hysteresis thresholds to prevent flickering
-var match_threshold: float = 0.15      # Need to be within this distance to become passable
-var no_match_threshold: float = 0.25   # Need to be further than this to become non-passable
+var current_display_color: Color
+var match_threshold: float = 0.15
 var is_currently_passable: bool = false
 
+# Timer-based state management
+var passable_timer: float = 0.0
+var was_color_matched: bool = false
+
 func _ready() -> void:
+	current_display_color = barrier_color
 	color_rect.color = barrier_color
 	original_occluder = light_occluder_2d.occluder
 	update_target_outline()
 	
+	if LightManager:
+		LightManager.light_hit_barrier.connect(_on_light_hit)
+		LightManager.light_removed_from_barrier.connect(_on_light_removed)
+
 func _process(delta: float) -> void:
-	update_color()
+	# Update timer
+	if passable_timer > 0:
+		passable_timer -= delta
+		update_color_visual()  # Update the ColorRect color based on timer
+	
 	update_collision()
 
-func add_light(source_node, light_color: Color):
-	active_lights[source_node] = light_color
-	
-func remove_light(source_node):
-	if source_node in active_lights:
-		active_lights.erase(source_node)
+func update_color_visual():
+	"""Update the ColorRect color based on timer progress"""
+	if is_currently_passable and passable_timer > 0:
+		# Calculate progress (1.0 = just activated, 0.0 = about to expire)
+		var progress = passable_timer / passable_duration
+		
+		# Interpolate from target_color (when activated) back to current_display_color (when expiring)
+		var visual_color = target_color.lerp(current_display_color, 1.0 - progress)
+		color_rect.color = visual_color
+	elif is_currently_passable:
+		# Timer expired, show current display color
+		color_rect.color = current_display_color
+	else:
+		# Not passable, show current display color
+		color_rect.color = current_display_color
 
-func update_color():
-	var final_color = barrier_color
+# Called by LightManager when lights change
+func update_color_from_manager(new_color: Color):
+	current_display_color = new_color
 	
-	# Add all light colors to the barrier's base color
-	for light_color in active_lights.values():
-		final_color.r = min(final_color.r + light_color.r, 1.0)
-		final_color.g = min(final_color.g + light_color.g, 1.0)
-		final_color.b = min(final_color.b + light_color.b, 1.0)
-	
-	color_rect.color = final_color
+	# Update visual if not currently in timer mode
+	if not is_currently_passable:
+		color_rect.color = new_color
+
+func _on_light_hit(light: Node2D, barrier: Node2D, color: Color):
+	if barrier == self:
+		pass
+
+func _on_light_removed(light: Node2D, barrier: Node2D):
+	if barrier == self:
+		pass
 
 func is_color_match(current: Color, target: Color, tolerance: float) -> bool:
 	var distance = sqrt(
@@ -55,33 +81,53 @@ func is_color_match(current: Color, target: Color, tolerance: float) -> bool:
 	return distance < tolerance
 
 func update_collision():
-	var current_color = color_rect.color
+	var color_matches_now = is_color_match(current_display_color, target_color, match_threshold)
 	
-	# Hysteresis logic: different thresholds for becoming passable vs non-passable
-	if not is_currently_passable:
-		# Not passable yet - check if we should become passable (stricter threshold)
-		if is_color_match(current_color, target_color, match_threshold):
-			is_currently_passable = true
-	else:
-		# Currently passable - check if we should become non-passable (looser threshold)
-		if not is_color_match(current_color, target_color, no_match_threshold):
-			is_currently_passable = false
+	# If color matches and we weren't matched before, start the timer
+	if color_matches_now and not was_color_matched:
+		passable_timer = passable_duration
+		print("Color matched! Barrier passable for ", passable_duration, " seconds")
 	
-	# Apply collision based on passable state
+	# Update the match state
+	was_color_matched = color_matches_now
+	
+	# Determine if barrier should be passable
+	var should_be_passable = passable_timer > 0
+	
+	# Apply state change
+	if should_be_passable != is_currently_passable:
+		is_currently_passable = should_be_passable
+		apply_collision_state()
+		
+		if is_currently_passable:
+			print("Barrier became passable (", int(passable_timer), "s remaining)")
+		else:
+			print("Barrier became solid (timer expired)")
+
+func apply_collision_state():
 	if is_currently_passable:
 		static_body.set_collision_layer_value(3, false)  # Player can pass through
-		static_body.set_collision_layer_value(5, true)   # Raycasts can still detect
+		static_body.set_collision_layer_value(5, true)   # Keep light detection
 		light_occluder_2d.occluder = null                # Light passes through
-		# Fade outline when barrier is passable
 		update_outline_opacity(0.3)
 	else:
 		static_body.set_collision_layer_value(3, true)   # Player blocked
-		static_body.set_collision_layer_value(5, true)   # Raycasts detect barrier
+		static_body.set_collision_layer_value(5, true)   # Light detection
 		light_occluder_2d.occluder = original_occluder   # Light blocked
-		# Normal outline opacity when barrier is solid
 		update_outline_opacity(outline_opacity)
 
-# Outline management functions
+# Manual control functions for testing
+func extend_timer(additional_time: float = 2.0):
+	"""Extend the passable timer"""
+	passable_timer += additional_time
+	print("Timer extended by ", additional_time, "s. New total: ", passable_timer)
+
+func force_passable_for_time(duration: float):
+	"""Force barrier to be passable for specific duration"""
+	passable_timer = duration
+	print("Forced passable for ", duration, " seconds")
+
+# Target outline functions
 func set_target_color(new_color: Color):
 	target_color = new_color
 	update_target_outline()
@@ -108,28 +154,15 @@ func update_outline_opacity(alpha: float):
 	if target_outline and show_target_outline:
 		target_outline.modulate.a = alpha
 
-# Helper function to set common target colors easily in code
-func set_target_color_preset(preset: String):
-	match preset.to_lower():
-		"white":
-			target_color = Color.WHITE
-		"cyan":
-			target_color = Color.CYAN
-		"yellow":
-			target_color = Color.YELLOW
-		"magenta":
-			target_color = Color.MAGENTA
-		_:
-			print("Unknown color preset: ", preset)
-			
-# Helper function to get color distance for debugging
-func get_color_distance_to_target() -> float:
-	var current_color = color_rect.color
-	return sqrt(
-		pow(current_color.r - target_color.r, 2) + 
-		pow(current_color.g - target_color.g, 2) + 
-		pow(current_color.b - target_color.b, 2)
-	)
-
 func should_block_light() -> bool:
 	return not is_currently_passable
+
+func cleanup():
+	if LightManager:
+		if LightManager.light_hit_barrier.is_connected(_on_light_hit):
+			LightManager.light_hit_barrier.disconnect(_on_light_hit)
+		if LightManager.light_removed_from_barrier.is_connected(_on_light_removed):
+			LightManager.light_removed_from_barrier.disconnect(_on_light_removed)
+
+func _exit_tree():
+	cleanup()

@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://dhvvehmyuwrgs" path="res://scenes/wall.tscn" id="1_ilhis"]
 [ext_resource type="PackedScene" uid="uid://d1esa4j588q6j" path="res://scenes/player.tscn" id="2_ep78u"]
-[ext_resource type="PackedScene" uid="uid://nrvnd2jy2qm" path="res://scenes/light.tscn" id="3_dfjjl"]
 [ext_resource type="PackedScene" uid="uid://uvswqh21mlhb" path="res://scenes/barrier.tscn" id="4_at1ld"]
+[ext_resource type="PackedScene" uid="uid://b3avnyoue3pq7" path="res://scenes/area2d_light.tscn" id="5_5722l"]
 [ext_resource type="PackedScene" uid="uid://dwqoch6qgogbj" path="res://scenes/goal.tscn" id="5_sd18g"]
 
 [sub_resource type="Gradient" id="Gradient_8cj0n"]
@@ -20,15 +20,35 @@ size = Vector2(1167, 20)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lnu2h"]
 size = Vector2(37, 651.5)
 
-[sub_resource type="Animation" id="Animation_5722l"]
-resource_name = "360"
-length = 6.0
-loop_mode = 1
-step = 0.1
+[sub_resource type="Animation" id="Animation_iywne"]
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Light:rotation")
+tracks/0/path = NodePath("Area2dLight:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_lbhrr"]
+resource_name = "rotating_light"
+length = 3.0
+loop_mode = 1
+step = 0.1
+
+[sub_resource type="Animation" id="Animation_5722l"]
+resource_name = "new_animation"
+length = 6.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Area2dLight:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -38,43 +58,10 @@ tracks/0/keys = {
 "values": [0.0, -1.5708, -3.14159, -4.71239, -6.28319]
 }
 
-[sub_resource type="Animation" id="Animation_iywne"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Light:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [-0.644027]
-}
-
-[sub_resource type="Animation" id="Animation_lbhrr"]
-resource_name = "rotating_light"
-length = 3.0
-loop_mode = 1
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Light:rotation")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.966667, 1.96667, 3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [0.0, -4.71239, 0.0, -3.14159]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_p57ef"]
 _data = {
-&"360": SubResource("Animation_5722l"),
 &"RESET": SubResource("Animation_iywne"),
+&"new_animation": SubResource("Animation_5722l"),
 &"rotating_light": SubResource("Animation_lbhrr")
 }
 
@@ -415,16 +402,11 @@ position = Vector2(960, 384)
 [node name="Player" parent="." instance=ExtResource("2_ep78u")]
 position = Vector2(126, 122)
 
-[node name="Light" parent="." instance=ExtResource("3_dfjjl")]
-position = Vector2(576, 320)
-rotation = -0.644027
-color_light = Color(0, 1, 0, 1)
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_p57ef")
 }
-autoplay = "360"
+autoplay = "new_animation"
 
 [node name="Goal" parent="." instance=ExtResource("5_sd18g")]
 position = Vector2(338, 72)
@@ -452,3 +434,6 @@ barrier_color = Color(1, 0, 0, 1)
 position = Vector2(1024, 320)
 scale = Vector2(1, 1)
 barrier_color = Color(1, 0, 0, 1)
+
+[node name="Area2dLight" parent="." instance=ExtResource("5_5722l")]
+position = Vector2(580, 322)
