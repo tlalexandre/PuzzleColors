@@ -266,10 +266,10 @@ position = Vector2(0, 512)
 position = Vector2(1088, 640)
 
 [node name="Wall21" parent="Walls" instance=ExtResource("1_20opy")]
-position = Vector2(256, 320)
+position = Vector2(256, 384)
 
 [node name="Wall22" parent="Walls" instance=ExtResource("1_20opy")]
-position = Vector2(320, 320)
+position = Vector2(320, 384)
 
 [node name="Wall25" parent="Walls" instance=ExtResource("1_20opy")]
 position = Vector2(64, 512)
@@ -290,13 +290,13 @@ position = Vector2(960, 512)
 position = Vector2(1088, 512)
 
 [node name="Wall23" parent="Walls" instance=ExtResource("1_20opy")]
-position = Vector2(256, 192)
+position = Vector2(256, 256)
 
 [node name="Wall24" parent="Walls" instance=ExtResource("1_20opy")]
-position = Vector2(320, 192)
+position = Vector2(320, 256)
 
 [node name="Wall5" parent="Walls" instance=ExtResource("1_20opy")]
-position = Vector2(192, 256)
+position = Vector2(192, 320)
 
 [node name="Barriers" type="Node2D" parent="."]
 
@@ -307,13 +307,13 @@ scale = Vector2(1, 1)
 barrier_color = Color(0, 1, 0, 1)
 
 [node name="Barrier4" parent="Barriers" instance=ExtResource("5_jq78i")]
-position = Vector2(960, 576)
+position = Vector2(896, 576)
 rotation = 1.5708
 scale = Vector2(1, 1)
 barrier_color = Color(0, 0, 1, 1)
 
 [node name="Barrier5" parent="Barriers" instance=ExtResource("5_jq78i")]
-position = Vector2(384, 256)
+position = Vector2(384, 320)
 rotation = 1.5708
 scale = Vector2(1, 1)
 barrier_color = Color(1, 0, 0, 1)
@@ -328,15 +328,15 @@ libraries = {
 autoplay = "360"
 
 [node name="Goal" parent="." instance=ExtResource("4_ofchu")]
-position = Vector2(312, 255)
+position = Vector2(320, 319)
 
 [node name="Lights" type="Node2D" parent="."]
 
 [node name="Area2dLight" parent="Lights" instance=ExtResource("5_20opy")]
-position = Vector2(136, 580)
+position = Vector2(128, 576)
 color_light = Color(1, 0, 0, 1)
 
 [node name="Area2dLight2" parent="Lights" instance=ExtResource("5_20opy")]
-position = Vector2(1012, 594)
-rotation = 3.69137
+position = Vector2(960, 576)
+rotation = 3.49066
 color_light = Color(0, 1, 0, 1)

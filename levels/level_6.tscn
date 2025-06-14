@@ -326,5 +326,5 @@ position = Vector2(1080, 319)
 [node name="Lights" type="Node2D" parent="."]
 
 [node name="Area2dLight" parent="Lights" instance=ExtResource("5_8tsbn")]
-position = Vector2(124, 319)
+position = Vector2(128, 320)
 color_light = Color(1, 0, 0, 1)
