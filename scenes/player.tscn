@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dx4qhnxp3nolb" path="res://scenes/straight_light.tscn" id="3_qhqgy"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_u8vuu"]
-radius = 32.0156
+radius = 30.0
 
 [sub_resource type="Gradient" id="Gradient_u8vuu"]
 offsets = PackedFloat32Array(0.850649, 0.867742)

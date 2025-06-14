@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://nrvnd2jy2qm"]
+[gd_scene load_steps=4 format=3 uid="uid://nrvnd2jy2qm"]
 
 [ext_resource type="Script" uid="uid://bsquxyvtjldne" path="res://scripts/light.gd" id="1_2e2gu"]
 [ext_resource type="Texture2D" uid="uid://q2elxb6owi1p" path="res://assets/1x/1x/Fichier 2.png" id="1_24oxn"]
+[ext_resource type="PackedScene" uid="uid://640e2dfugqjv" path="res://scenes/grid_snappable.tscn" id="3_ky1i4"]
 
 [node name="Light" type="Node2D"]
 script = ExtResource("1_2e2gu")
@@ -79,3 +80,5 @@ modulate = Color(1, 1, 1, 0.290196)
 position = Vector2(1, -329)
 scale = Vector2(0.410156, 0.662767)
 texture = ExtResource("1_24oxn")
+
+[node name="GridSnappable" parent="." instance=ExtResource("3_ky1i4")]

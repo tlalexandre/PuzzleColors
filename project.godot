@@ -18,6 +18,11 @@ config/icon="res://icon.svg"
 [autoload]
 
 LevelManager="*res://singletons/level_manager.gd"
+GridSystem="*res://singletons/grid_system.gd"
+
+[display]
+
+window/size/viewport_height=640
 
 [global_group]
 

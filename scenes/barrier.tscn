@@ -1,17 +1,20 @@
-[gd_scene load_steps=4 format=3 uid="uid://uvswqh21mlhb"]
+[gd_scene load_steps=6 format=3 uid="uid://uvswqh21mlhb"]
 
 [ext_resource type="Script" uid="uid://dd54fiq081oof" path="res://scripts/barrier.gd" id="1_qfl2k"]
+[ext_resource type="PackedScene" uid="uid://640e2dfugqjv" path="res://scenes/grid_snappable.tscn" id="2_8ilpk"]
+[ext_resource type="Texture2D" uid="uid://1tgxsm3nf0nu" path="res://assets/1x/1x/1x/target_color_barrier_sprite.png" id="3_dlnxh"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_qfl2k"]
-polygon = PackedVector2Array(-32, -32, -32, 32, 32, 32, 32, -32)
+polygon = PackedVector2Array(-32, -51.2, -32, 51.2, 32, 51.2, 32, -51.2)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_exqad"]
-size = Vector2(64, 20)
+size = Vector2(64, 32)
 
 [node name="Barrier" type="Node2D" groups=["barriers"]]
 scale = Vector2(2, 1)
 script = ExtResource("1_qfl2k")
 barrier_color = Color(1, 1, 1, 1)
+outline_opacity = 1.0
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 position = Vector2(0, 9.53674e-07)
@@ -27,6 +30,11 @@ shape = SubResource("RectangleShape2D_exqad")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_left = -32.0
-offset_top = -10.0
+offset_top = -16.0
 offset_right = 32.0
-offset_bottom = 10.0
+offset_bottom = 16.0
+
+[node name="GridSnappable" parent="." instance=ExtResource("2_8ilpk")]
+
+[node name="TargetOutline" type="Sprite2D" parent="."]
+texture = ExtResource("3_dlnxh")

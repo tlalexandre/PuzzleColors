@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://c7xak4y41i4js" path="res://scripts/goal.gd" id="1_sx1j4"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xl315"]
-radius = 40.0
+radius = 32.0
 
 [sub_resource type="Animation" id="Animation_w3gav"]
 length = 0.001

@@ -1,4 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://dhvvehmyuwrgs"]
+[gd_scene load_steps=6 format=3 uid="uid://dhvvehmyuwrgs"]
+
+[ext_resource type="PackedScene" uid="uid://640e2dfugqjv" path="res://scenes/grid_snappable.tscn" id="1_wykyb"]
 
 [sub_resource type="Gradient" id="Gradient_uvhfp"]
 offsets = PackedFloat32Array(0)
@@ -27,3 +29,5 @@ shape = SubResource("RectangleShape2D_uvhfp")
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 occluder = SubResource("OccluderPolygon2D_uvhfp")
+
+[node name="GridSnappable" parent="." instance=ExtResource("1_wykyb")]

@@ -1,11 +1,17 @@
 extends Node2D
+
 @export var barrier_color: Color = Color.RED
-@export var target_color: Color = Color.WHITE
+@export var target_color: Color = Color.WHITE : set = set_target_color
 @export var color_tolerance: float = 0.15
+@export var show_target_outline: bool = true : set = set_show_target_outline
+@export var outline_opacity: float = 0.8 : set = set_outline_opacity
+
 var active_lights: Dictionary = {}  # source_node -> color
 @onready var color_rect: ColorRect = $ColorRect
 @onready var static_body: StaticBody2D = $StaticBody2D
 @onready var light_occluder_2d: LightOccluder2D = $LightOccluder2D
+@onready var target_outline: Sprite2D = $TargetOutline
+
 var original_occluder: OccluderPolygon2D
 
 # Hysteresis thresholds to prevent flickering
@@ -16,6 +22,7 @@ var is_currently_passable: bool = false
 func _ready() -> void:
 	color_rect.color = barrier_color
 	original_occluder = light_occluder_2d.occluder
+	update_target_outline()
 	
 func _process(delta: float) -> void:
 	update_color()
@@ -65,14 +72,41 @@ func update_collision():
 		static_body.set_collision_layer_value(3, false)  # Player can pass through
 		static_body.set_collision_layer_value(5, true)   # Raycasts can still detect
 		light_occluder_2d.occluder = null                # Light passes through
+		# Fade outline when barrier is passable
+		update_outline_opacity(0.3)
 	else:
 		static_body.set_collision_layer_value(3, true)   # Player blocked
 		static_body.set_collision_layer_value(5, true)   # Raycasts detect barrier
 		light_occluder_2d.occluder = original_occluder   # Light blocked
+		# Normal outline opacity when barrier is solid
+		update_outline_opacity(outline_opacity)
 
-# This method tells the light system whether this barrier should block further ray detection
-func should_block_light() -> bool:
-	return not is_currently_passable
+# Outline management functions
+func set_target_color(new_color: Color):
+	target_color = new_color
+	update_target_outline()
+
+func set_show_target_outline(show: bool):
+	show_target_outline = show
+	update_target_outline()
+
+func set_outline_opacity(opacity: float):
+	outline_opacity = opacity
+	update_target_outline()
+
+func update_target_outline():
+	if not target_outline:
+		return
+	
+	if show_target_outline:
+		target_outline.visible = true
+		target_outline.modulate = Color(target_color.r, target_color.g, target_color.b, outline_opacity)
+	else:
+		target_outline.visible = false
+
+func update_outline_opacity(alpha: float):
+	if target_outline and show_target_outline:
+		target_outline.modulate.a = alpha
 
 # Helper function to set common target colors easily in code
 func set_target_color_preset(preset: String):
@@ -96,3 +130,6 @@ func get_color_distance_to_target() -> float:
 		pow(current_color.g - target_color.g, 2) + 
 		pow(current_color.b - target_color.b, 2)
 	)
+
+func should_block_light() -> bool:
+	return not is_currently_passable

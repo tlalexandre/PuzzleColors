@@ -112,55 +112,228 @@ visibility_layer = 2
 [node name="Walls" type="Node2D" parent="GameplayLayer"]
 
 [node name="Wall" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
-position = Vector2(571, 40)
+position = Vector2(192, 0)
 
 [node name="Wall9" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
-position = Vector2(572, 480)
+position = Vector2(576, 512)
 
 [node name="Wall10" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
-position = Vector2(570, 543)
+position = Vector2(576, 512)
 
 [node name="Wall11" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
-position = Vector2(571, 605)
+position = Vector2(576, 576)
 
 [node name="Wall12" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
-position = Vector2(571, 40)
+position = Vector2(128, 0)
 
 [node name="Wall13" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
-position = Vector2(571, 40)
+position = Vector2(64, 0)
 
 [node name="Wall2" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
-position = Vector2(379, 289)
 
 [node name="Wall3" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
-position = Vector2(443, 289)
+position = Vector2(0, 128)
+
+[node name="Wall14" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(0, 64)
 
 [node name="Wall4" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
-position = Vector2(508, 289)
+position = Vector2(64, 128)
 
 [node name="Wall5" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
-position = Vector2(571, 288)
+position = Vector2(128, 128)
 
 [node name="Wall6" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
-position = Vector2(571, 228)
+position = Vector2(192, 128)
 
 [node name="Wall7" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
-position = Vector2(571, 166)
+position = Vector2(256, 128)
 
 [node name="Wall8" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
-position = Vector2(571, 104)
+position = Vector2(256, 0)
+
+[node name="Wall15" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(0, 640)
+
+[node name="Wall16" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(64, 640)
+
+[node name="Wall17" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(128, 640)
+
+[node name="Wall41" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(192, 640)
+
+[node name="Wall42" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(256, 640)
+
+[node name="Wall43" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(320, 640)
+
+[node name="Wall44" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(384, 640)
+
+[node name="Wall45" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(448, 640)
+
+[node name="Wall46" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(512, 640)
+
+[node name="Wall47" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(576, 640)
+
+[node name="Wall48" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(640, 640)
+
+[node name="Wall49" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(704, 640)
+
+[node name="Wall50" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(768, 640)
+
+[node name="Wall51" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(832, 640)
+
+[node name="Wall52" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(896, 640)
+
+[node name="Wall53" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(960, 640)
+
+[node name="Wall54" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(1024, 640)
+
+[node name="Wall55" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(1088, 640)
+
+[node name="Wall56" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(1152, 640)
+
+[node name="Wall57" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(1152, 576)
+
+[node name="Wall58" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(1152, 512)
+
+[node name="Wall59" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(1152, 448)
+
+[node name="Wall60" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(1152, 384)
+
+[node name="Wall61" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(1152, 320)
+
+[node name="Wall62" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(1152, 256)
+
+[node name="Wall63" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(1152, 192)
+
+[node name="Wall64" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(1152, 128)
+
+[node name="Wall65" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(1152, 64)
+
+[node name="Wall66" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(1152, 0)
+
+[node name="Wall67" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(1088, 0)
+
+[node name="Wall68" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(1024, 0)
+
+[node name="Wall69" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(960, 0)
+
+[node name="Wall70" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(896, 0)
+
+[node name="Wall71" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(832, 0)
+
+[node name="Wall72" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(768, 0)
+
+[node name="Wall73" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(640, 0)
+
+[node name="Wall74" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(704, 0)
+
+[node name="Wall75" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(576, 0)
+
+[node name="Wall76" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(512, 0)
+
+[node name="Wall77" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(448, 0)
+
+[node name="Wall78" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(384, 0)
+
+[node name="Wall79" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(320, 0)
+
+[node name="Wall80" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(256, 0)
+
+[node name="Wall81" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(192, 0)
+
+[node name="Wall82" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(128, 0)
+
+[node name="Wall83" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(64, 0)
+
+[node name="Wall84" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+
+[node name="Wall85" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(0, 64)
+
+[node name="Wall86" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(0, 128)
+
+[node name="Wall87" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(0, 192)
+
+[node name="Wall88" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(0, 256)
+
+[node name="Wall89" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(0, 320)
+
+[node name="Wall90" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(0, 384)
+
+[node name="Wall91" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(0, 448)
+
+[node name="Wall92" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(0, 512)
+
+[node name="Wall93" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(0, 576)
+
+[node name="Wall94" parent="GameplayLayer/Walls" instance=ExtResource("1_n46q3")]
+position = Vector2(0, 576)
 
 [node name="Player" parent="GameplayLayer" instance=ExtResource("2_btoec")]
 position = Vector2(229, 268)
 
 [node name="Light" parent="GameplayLayer" instance=ExtResource("3_gwceb")]
-position = Vector2(1020, 634)
+position = Vector2(704, 384)
 rotation = -0.644027
 color_light = Color(0, 1, 0, 1)
 
 [node name="Barrier" parent="GameplayLayer" instance=ExtResource("4_l53as")]
-position = Vector2(570, 385)
+position = Vector2(256, 64)
 rotation = 1.5708
+scale = Vector2(1, 1)
 barrier_color = Color(1, 0, 0, 1)
 
 [node name="Goal" parent="GameplayLayer" instance=ExtResource("5_3sk1a")]

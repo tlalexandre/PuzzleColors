@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://640e2dfugqjv"]
+
+[ext_resource type="Script" uid="uid://bnc4hu74ag32x" path="res://scripts/grid_snappable.gd" id="1_qq314"]
+
+[node name="GridSnappable" type="Node"]
+script = ExtResource("1_qq314")
