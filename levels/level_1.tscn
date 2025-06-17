@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://b5eve0drebuc7"]
+[gd_scene load_steps=14 format=3 uid="uid://b5eve0drebuc7"]
 
 [ext_resource type="Script" uid="uid://l3cybq36u2xv" path="res://scripts/leveltest.gd" id="1_btoec"]
 [ext_resource type="PackedScene" uid="uid://dhvvehmyuwrgs" path="res://scenes/wall.tscn" id="1_n46q3"]
 [ext_resource type="PackedScene" uid="uid://d1esa4j588q6j" path="res://scenes/player.tscn" id="2_btoec"]
 [ext_resource type="PackedScene" uid="uid://uvswqh21mlhb" path="res://scenes/barrier.tscn" id="4_l53as"]
 [ext_resource type="PackedScene" uid="uid://dwqoch6qgogbj" path="res://scenes/goal.tscn" id="5_3sk1a"]
+[ext_resource type="PackedScene" uid="uid://h4em2vwwpoy1" path="res://scenes/movable_block.tscn" id="6_btoec"]
 
 [sub_resource type="Gradient" id="Gradient_8cj0n"]
 offsets = PackedFloat32Array(0.988372)
@@ -305,12 +306,15 @@ position = Vector2(845, 508)
 [node name="Barrier" parent="GameplayLayer" instance=ExtResource("4_l53as")]
 position = Vector2(512, 256)
 rotation = 1.5708
-scale = Vector2(1, 1)
 barrier_color = Color(1, 0, 0, 1)
 target_color = Color(1, 0, 1, 1)
+outline_opacity = 10.0
 
 [node name="Goal" parent="GameplayLayer" instance=ExtResource("5_3sk1a")]
 position = Vector2(1068, 84)
+
+[node name="MovableBlock" parent="GameplayLayer" instance=ExtResource("6_btoec")]
+position = Vector2(768, 320)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

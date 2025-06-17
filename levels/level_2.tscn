@@ -415,24 +415,20 @@ position = Vector2(338, 72)
 
 [node name="Barrier" parent="Barriers" instance=ExtResource("4_at1ld")]
 position = Vector2(128, 320)
-scale = Vector2(1, 1)
 barrier_color = Color(1, 0, 0, 1)
 
 [node name="Barrier3" parent="Barriers" instance=ExtResource("4_at1ld")]
 position = Vector2(576, 512)
 rotation = 1.5708
-scale = Vector2(1, 1)
 barrier_color = Color(1, 0, 0, 1)
 
 [node name="Barrier4" parent="Barriers" instance=ExtResource("4_at1ld")]
 position = Vector2(576, 128)
 rotation = 1.5708
-scale = Vector2(1, 1)
 barrier_color = Color(1, 0, 0, 1)
 
 [node name="Barrier5" parent="Barriers" instance=ExtResource("4_at1ld")]
 position = Vector2(1024, 320)
-scale = Vector2(1, 1)
 barrier_color = Color(1, 0, 0, 1)
 
 [node name="Area2dLight" parent="." instance=ExtResource("5_5722l")]

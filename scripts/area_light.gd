@@ -234,6 +234,9 @@ func _is_point_visible(from: Vector2, to: Vector2, target_object: Node2D = null)
 	# Check if we hit a wall
 	if hit_object.is_in_group("walls"):
 		return false
+		
+	if hit_object.is_in_group("movable_blocks"):
+		return false
 	
 	# Check if we hit a solid barrier (not the target)
 	if hit_object.is_in_group("barriers"):

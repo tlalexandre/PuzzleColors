@@ -1,0 +1,37 @@
+[gd_scene load_steps=7 format=3 uid="uid://h4em2vwwpoy1"]
+
+[ext_resource type="Script" uid="uid://bv1a04xeu3odx" path="res://scripts/movable_block.gd" id="1_4vhqg"]
+[ext_resource type="PackedScene" uid="uid://640e2dfugqjv" path="res://scenes/grid_snappable.tscn" id="2_63tbu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3vhph"]
+
+[sub_resource type="Gradient" id="Gradient_63tbu"]
+offsets = PackedFloat32Array(0.226744, 0.232558)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_rnngr"]
+gradient = SubResource("Gradient_63tbu")
+fill = 1
+fill_from = Vector2(0.5, 0.478632)
+fill_to = Vector2(0.504274, 0)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_63tbu"]
+polygon = PackedVector2Array(-32, -32, -32, 32, 32, 32, 32, -32)
+
+[node name="MovableBlock" type="RigidBody2D" groups=["movable_blocks"]]
+collision_layer = 3
+collision_mask = 0
+script = ExtResource("1_4vhqg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_3vhph")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 1)
+texture = SubResource("GradientTexture2D_rnngr")
+
+[node name="GridSnappable" parent="." instance=ExtResource("2_63tbu")]
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+position = Vector2(0, 1)
+occluder = SubResource("OccluderPolygon2D_63tbu")

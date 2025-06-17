@@ -15,7 +15,7 @@ size = Vector2(64, 64)
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_uvhfp"]
 polygon = PackedVector2Array(-32, -32, -32, 32, 32, 32, 32, -32)
 
-[node name="Wall" type="Node2D"]
+[node name="Wall" type="Node2D" groups=["walls"]]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = SubResource("GradientTexture2D_wykyb")

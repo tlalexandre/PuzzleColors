@@ -15,6 +15,7 @@ signal passable_state_changed
 @onready var static_body: StaticBody2D = $StaticBody2D
 @onready var light_occluder_2d: LightOccluder2D = $LightOccluder2D
 @onready var target_outline: Sprite2D = $TargetOutline
+@onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 
 var original_occluder: OccluderPolygon2D
 var current_display_color: Color
@@ -90,6 +91,7 @@ func update_collision():
 	if color_matches_now and not was_color_matched:
 		passable_timer = passable_duration
 		print("Color matched! Barrier passable for ", passable_duration, " seconds")
+		animated_sprite_2d.play("unlock")
 	
 	# Update the match state
 	was_color_matched = color_matches_now
@@ -106,6 +108,7 @@ func update_collision():
 			print("Barrier became passable (", int(passable_timer), "s remaining)")
 		else:
 			print("Barrier became solid (timer expired)")
+			animated_sprite_2d.play("lock")
 
 func apply_collision_state():
 	var previous_state = is_currently_passable
@@ -114,12 +117,11 @@ func apply_collision_state():
 		static_body.set_collision_layer_value(3, false)  # Player can pass through
 		static_body.set_collision_layer_value(5, true)   # Keep light detection
 		light_occluder_2d.occluder = null                # Light passes through
-		update_outline_opacity(0.3)
 	else:
 		static_body.set_collision_layer_value(3, true)   # Player blocked
 		static_body.set_collision_layer_value(5, true)   # Light detection
 		light_occluder_2d.occluder = original_occluder   # Light blocked
-		update_outline_opacity(outline_opacity)
+
 	
 	# Only change: emit signal when state changes
 	if previous_state != is_currently_passable:
@@ -150,18 +152,18 @@ func set_outline_opacity(opacity: float):
 	update_target_outline()
 
 func update_target_outline():
-	if not target_outline:
+	if not animated_sprite_2d:
 		return
 	
 	if show_target_outline:
-		target_outline.visible = true
-		target_outline.modulate = Color(target_color.r, target_color.g, target_color.b, outline_opacity)
+		animated_sprite_2d.visible = true
+		animated_sprite_2d.modulate = Color(target_color.r, target_color.g, target_color.b, outline_opacity)
 	else:
-		target_outline.visible = false
+		animated_sprite_2d.visible = false
 
 func update_outline_opacity(alpha: float):
-	if target_outline and show_target_outline:
-		target_outline.modulate.a = alpha
+	if animated_sprite_2d and show_target_outline:
+		animated_sprite_2d.modulate.a = alpha
 
 func should_block_light() -> bool:
 	return not is_currently_passable

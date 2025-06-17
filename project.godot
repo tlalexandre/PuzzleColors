@@ -29,6 +29,8 @@ window/size/viewport_height=640
 
 barriers=""
 lenses=""
+movable_blocks=""
+walls=""
 
 [input]
 
