@@ -262,10 +262,15 @@ func _update_lighting_state(new_confirmed_objects: Array):
 func _handle_object_lit(obj: Node2D):
 	if obj.is_in_group("barriers") and LightManager:
 		LightManager.add_light_to_barrier(self, obj)
+	if obj.is_in_group("movable_blocks"):
+		pass
 
 func _handle_object_unlit(obj: Node2D):
 	if obj.is_in_group("barriers") and LightManager:
 		LightManager.remove_light_from_barrier(self, obj)
+	if obj.is_in_group("movable_blocks") and LightManager:
+		print("Remove Light from movable block")
+		LightManager.remove_light_from_barrier(self,obj)
 
 func _process(delta):
 	# Periodic line of sight check (less frequent for performance)

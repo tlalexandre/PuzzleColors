@@ -67,6 +67,9 @@ func process_light_collisions(light: Node2D, raycast_array: Array):
 			if collider and collider.is_in_group("walls"):
 				break
 				
+			if collider and collider.is_in_group("movable_blocks"):
+				break
+				
 			if collider and collider.is_in_group("barriers"):
 				var barrier = collider.get_parent()
 				if barrier and not barrier in new_hit_barriers:

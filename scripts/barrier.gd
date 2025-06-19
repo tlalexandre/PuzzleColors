@@ -14,7 +14,6 @@ signal passable_state_changed
 @onready var color_rect: ColorRect = $ColorRect
 @onready var static_body: StaticBody2D = $StaticBody2D
 @onready var light_occluder_2d: LightOccluder2D = $LightOccluder2D
-@onready var target_outline: Sprite2D = $TargetOutline
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 
 var original_occluder: OccluderPolygon2D

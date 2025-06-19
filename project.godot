@@ -64,6 +64,7 @@ right={
 2d_physics/layer_5="Light Detection"
 2d_physics/layer_6="Goal"
 2d_physics/layer_7="Lenses"
+2d_physics/layer_8="MovableBlocks"
 
 [rendering]
 

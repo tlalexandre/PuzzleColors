@@ -301,14 +301,12 @@ position = Vector2(0, 576)
 [node name="Barrier3" parent="Barriers" instance=ExtResource("2_rqsg2")]
 position = Vector2(192, 320)
 rotation = 1.5708
-scale = Vector2(1, 1)
 barrier_color = Color(1, 0, 0, 1)
 target_color = Color(1, 0, 1, 1)
 
 [node name="Barrier4" parent="Barriers" instance=ExtResource("2_rqsg2")]
 position = Vector2(960, 320)
 rotation = 1.5708
-scale = Vector2(1, 1)
 barrier_color = Color(0.0156863, 1, 0, 1)
 
 [node name="Player" parent="." instance=ExtResource("3_fpvgn")]

@@ -1,37 +1,205 @@
-[gd_scene load_steps=7 format=3 uid="uid://h4em2vwwpoy1"]
+[gd_scene load_steps=44 format=3 uid="uid://h4em2vwwpoy1"]
 
 [ext_resource type="Script" uid="uid://bv1a04xeu3odx" path="res://scripts/movable_block.gd" id="1_4vhqg"]
 [ext_resource type="PackedScene" uid="uid://640e2dfugqjv" path="res://scenes/grid_snappable.tscn" id="2_63tbu"]
+[ext_resource type="Texture2D" uid="uid://r8qin3e53asv" path="res://assets/1x/1x/animations/movable_block/arrows_00000.png" id="3_v1pyb"]
+[ext_resource type="Texture2D" uid="uid://b1b4f3gmgkj64" path="res://assets/1x/1x/animations/movable_block/arrows_00001.png" id="4_4mfba"]
+[ext_resource type="Texture2D" uid="uid://ccnlsx1t8kdvi" path="res://assets/1x/1x/animations/movable_block/arrows_00002.png" id="5_gdyq5"]
+[ext_resource type="Texture2D" uid="uid://vykj7pwa6khf" path="res://assets/1x/1x/animations/movable_block/arrows_00003.png" id="6_tlwn0"]
+[ext_resource type="Texture2D" uid="uid://et0brlrf6hqx" path="res://assets/1x/1x/animations/movable_block/arrows_00004.png" id="7_4x5ld"]
+[ext_resource type="Texture2D" uid="uid://csf24fgbi43ut" path="res://assets/1x/1x/animations/movable_block/arrows_00005.png" id="8_yeufv"]
+[ext_resource type="Texture2D" uid="uid://wvr7ytqvilmb" path="res://assets/1x/1x/animations/movable_block/arrows_00006.png" id="9_jsetf"]
+[ext_resource type="Texture2D" uid="uid://bg3yl24vdmtjv" path="res://assets/1x/1x/animations/movable_block/arrows_00007.png" id="10_vb2lh"]
+[ext_resource type="Texture2D" uid="uid://cfj5lbopfxhlv" path="res://assets/1x/1x/animations/movable_block/arrows_00008.png" id="11_uxijr"]
+[ext_resource type="Texture2D" uid="uid://f628ailbwykk" path="res://assets/1x/1x/animations/movable_block/arrows_00009.png" id="12_pq30e"]
+[ext_resource type="Texture2D" uid="uid://etne2tfsb3es" path="res://assets/1x/1x/animations/movable_block/arrows_00010.png" id="13_8bu8v"]
+[ext_resource type="Texture2D" uid="uid://byrr1pv876k4m" path="res://assets/1x/1x/animations/movable_block/arrows_00011.png" id="14_b73fq"]
+[ext_resource type="Texture2D" uid="uid://cqgvcxkwrkh43" path="res://assets/1x/1x/animations/movable_block/arrows_00012.png" id="15_q5p81"]
+[ext_resource type="Texture2D" uid="uid://b4n03kef6svxi" path="res://assets/1x/1x/animations/movable_block/arrows_00013.png" id="16_yu457"]
+[ext_resource type="Texture2D" uid="uid://cwc3lkamj2y7m" path="res://assets/1x/1x/animations/movable_block/arrows_00014.png" id="17_v64h1"]
+[ext_resource type="Texture2D" uid="uid://8opvga10fcio" path="res://assets/1x/1x/animations/movable_block/arrows_00015.png" id="18_jm11y"]
+[ext_resource type="Texture2D" uid="uid://4ke7qlg212wj" path="res://assets/1x/1x/animations/movable_block/arrows_00016.png" id="19_8vrud"]
+[ext_resource type="Texture2D" uid="uid://bw5nyg3by8pcp" path="res://assets/1x/1x/animations/movable_block/arrows_00017.png" id="20_mxv3h"]
+[ext_resource type="Texture2D" uid="uid://bg7nkatha6wf7" path="res://assets/1x/1x/animations/movable_block/arrows_00018.png" id="21_thnn8"]
+[ext_resource type="Texture2D" uid="uid://cmitlc6drdcri" path="res://assets/1x/1x/animations/movable_block/arrows_00019.png" id="22_dsnc5"]
+[ext_resource type="Texture2D" uid="uid://ngi0lskpxj65" path="res://assets/1x/1x/animations/movable_block/arrows_00020.png" id="23_v5o2f"]
+[ext_resource type="Texture2D" uid="uid://cpum3fu8mqsou" path="res://assets/1x/1x/animations/movable_block/arrows_00021.png" id="24_d6wsa"]
+[ext_resource type="Texture2D" uid="uid://cgqedlg68iqu" path="res://assets/1x/1x/animations/movable_block/arrows_00022.png" id="25_0yxij"]
+[ext_resource type="Texture2D" uid="uid://dyudhmn62mr1i" path="res://assets/1x/1x/animations/movable_block/arrows_00023.png" id="26_0u4tl"]
+[ext_resource type="Texture2D" uid="uid://dif447qc2rlrg" path="res://assets/1x/1x/animations/movable_block/arrows_00024.png" id="27_acibu"]
+[ext_resource type="Texture2D" uid="uid://b4e3mjbqyns1r" path="res://assets/1x/1x/animations/movable_block/arrows_00025.png" id="28_drcoc"]
+[ext_resource type="Texture2D" uid="uid://blbw527bqsode" path="res://assets/1x/1x/animations/movable_block/arrows_00026.png" id="29_k21k3"]
+[ext_resource type="Texture2D" uid="uid://ct03bkwrg0lhb" path="res://assets/1x/1x/animations/movable_block/arrows_00027.png" id="30_q5e2v"]
+[ext_resource type="Texture2D" uid="uid://53buatjue866" path="res://assets/1x/1x/animations/movable_block/arrows_00028.png" id="31_paacx"]
+[ext_resource type="Texture2D" uid="uid://cskodl7rwcvf4" path="res://assets/1x/1x/animations/movable_block/arrows_00029.png" id="32_u03v5"]
+[ext_resource type="Texture2D" uid="uid://dj6uindg2me2a" path="res://assets/1x/1x/animations/movable_block/arrows_00030.png" id="33_6g4m6"]
+[ext_resource type="Texture2D" uid="uid://b34ubdg05k17o" path="res://assets/1x/1x/animations/movable_block/arrows_00031.png" id="34_d2u18"]
+[ext_resource type="Texture2D" uid="uid://bv3tw2ltp17im" path="res://assets/1x/1x/animations/movable_block/arrows_00032.png" id="35_62nsp"]
+[ext_resource type="Texture2D" uid="uid://cl7ibq7v56fts" path="res://assets/1x/1x/animations/movable_block/arrows_00033.png" id="36_selxr"]
+[ext_resource type="Texture2D" uid="uid://ccqs5ekk6rrgm" path="res://assets/1x/1x/animations/movable_block/arrows_00034.png" id="37_l3obr"]
+[ext_resource type="Texture2D" uid="uid://csh8hhd7eqrgy" path="res://assets/1x/1x/animations/movable_block/arrows_00035.png" id="38_km5qo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3vhph"]
+size = Vector2(64, 63)
 
-[sub_resource type="Gradient" id="Gradient_63tbu"]
-offsets = PackedFloat32Array(0.226744, 0.232558)
-colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+[sub_resource type="Gradient" id="Gradient_v1pyb"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_rnngr"]
-gradient = SubResource("Gradient_63tbu")
-fill = 1
-fill_from = Vector2(0.5, 0.478632)
-fill_to = Vector2(0.504274, 0)
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4mfba"]
+gradient = SubResource("Gradient_v1pyb")
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_63tbu"]
 polygon = PackedVector2Array(-32, -32, -32, 32, 32, 32, 32, -32)
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_s78g1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_v1pyb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_4mfba")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_gdyq5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_tlwn0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_4x5ld")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_yeufv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_jsetf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_vb2lh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_uxijr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_pq30e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_8bu8v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_b73fq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_q5p81")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_yu457")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_v64h1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_jm11y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_8vrud")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_mxv3h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_thnn8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_dsnc5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_v5o2f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_d6wsa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_0yxij")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_0u4tl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_acibu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_drcoc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_k21k3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_q5e2v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_paacx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_u03v5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_6g4m6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_d2u18")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_62nsp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_selxr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_l3obr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_km5qo")
+}],
+"loop": false,
+"name": &"default",
+"speed": 24.0
+}]
+
 [node name="MovableBlock" type="RigidBody2D" groups=["movable_blocks"]]
-collision_layer = 3
-collision_mask = 0
+collision_layer = 129
+collision_mask = 155
+gravity_scale = 0.0
+can_sleep = false
+lock_rotation = true
+continuous_cd = 2
+contact_monitor = true
+max_contacts_reported = 5
+linear_damp = 5.0
 script = ExtResource("1_4vhqg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_3vhph")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, 1)
-texture = SubResource("GradientTexture2D_rnngr")
+texture = SubResource("GradientTexture2D_4mfba")
 
 [node name="GridSnappable" parent="." instance=ExtResource("2_63tbu")]
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 position = Vector2(0, 1)
 occluder = SubResource("OccluderPolygon2D_63tbu")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_s78g1")
+autoplay = "default"
+
+[node name="AnimationTimer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[connection signal="timeout" from="AnimationTimer" to="." method="_on_animation_timer_timeout"]

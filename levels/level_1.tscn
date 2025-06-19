@@ -302,6 +302,7 @@ position = Vector2(0, 576)
 
 [node name="Player" parent="GameplayLayer" instance=ExtResource("2_btoec")]
 position = Vector2(845, 508)
+min_push_velocity = 20.0
 
 [node name="Barrier" parent="GameplayLayer" instance=ExtResource("4_l53as")]
 position = Vector2(512, 256)
