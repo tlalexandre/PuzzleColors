@@ -332,8 +332,14 @@ position = Vector2(320, 319)
 [node name="Area2dLight" parent="Lights" instance=ExtResource("5_20opy")]
 position = Vector2(128, 576)
 color_light = Color(1, 0, 0, 1)
+cone_angle_degrees = 20.0
+cone_length = 450.0
+light_length = 1.0
 
 [node name="Area2dLight2" parent="Lights" instance=ExtResource("5_20opy")]
 position = Vector2(960, 576)
 rotation = 3.49066
 color_light = Color(0, 1, 0, 1)
+cone_angle_degrees = 20.0
+cone_length = 400.0
+light_length = 1.0

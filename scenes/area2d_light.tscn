@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://b3avnyoue3pq7"]
+[gd_scene load_steps=5 format=3 uid="uid://b3avnyoue3pq7"]
 
 [ext_resource type="Script" uid="uid://3lvu7qelgl05" path="res://scripts/area_light.gd" id="1_1mgcr"]
 [ext_resource type="Texture2D" uid="uid://418q325g3kdv" path="res://assets/1x/1x/texture_light.png" id="2_r22jg"]
 [ext_resource type="PackedScene" uid="uid://640e2dfugqjv" path="res://scenes/grid_snappable.tscn" id="3_r22jg"]
+[ext_resource type="Texture2D" uid="uid://3oqygc70f2tc" path="res://assets/1x/1x/1x/LightObject.png" id="4_1axxr"]
 
 [node name="Area2dLight" type="Node2D"]
 script = ExtResource("1_1mgcr")
@@ -23,10 +24,15 @@ offset = Vector2(1.96723, -410.5)
 [node name="LightDetectionArea" type="Area2D" parent="."]
 rotation = 1.5708
 collision_layer = 0
-collision_mask = 6
+collision_mask = 70
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="LightDetectionArea"]
 position = Vector2(-4, 1)
 scale = Vector2(2.05208, 1.71865)
 
 [node name="GridSnappable" parent="." instance=ExtResource("3_r22jg")]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 1.5708
+scale = Vector2(0.125, 0.125)
+texture = ExtResource("4_1axxr")

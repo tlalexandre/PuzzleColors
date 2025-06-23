@@ -40,7 +40,7 @@
 [ext_resource type="Texture2D" uid="uid://csh8hhd7eqrgy" path="res://assets/1x/1x/animations/movable_block/arrows_00035.png" id="38_km5qo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3vhph"]
-size = Vector2(64, 63)
+size = Vector2(64, 64)
 
 [sub_resource type="Gradient" id="Gradient_v1pyb"]
 offsets = PackedFloat32Array(0)
@@ -181,17 +181,14 @@ linear_damp = 5.0
 script = ExtResource("1_4vhqg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_3vhph")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, 1)
 texture = SubResource("GradientTexture2D_4mfba")
 
 [node name="GridSnappable" parent="." instance=ExtResource("2_63tbu")]
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
-position = Vector2(0, 1)
 occluder = SubResource("OccluderPolygon2D_63tbu")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

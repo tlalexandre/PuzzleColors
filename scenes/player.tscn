@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://b3avnyoue3pq7" path="res://scenes/area2d_light.tscn" id="3_dqkch"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_u8vuu"]
-radius = 33.0
+radius = 25.0
 
 [sub_resource type="Gradient" id="Gradient_u8vuu"]
 offsets = PackedFloat32Array(0.850649, 0.867742)
@@ -17,7 +17,7 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.8, 0)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g2els"]
-radius = 35.0
+radius = 25.0
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_layer = 129
@@ -32,7 +32,9 @@ shape = SubResource("CircleShape2D_u8vuu")
 texture = SubResource("GradientTexture2D_3vyb7")
 
 [node name="Area2dLight" parent="." instance=ExtResource("3_dqkch")]
-color_light = Color(0.0156863, 0, 1, 1)
+color_light = Color(0.0156863, 1, 1, 1)
+cone_angle_degrees = 18.0
+cone_length = 380.0
 
 [node name="Area2D" type="Area2D" parent="."]
 

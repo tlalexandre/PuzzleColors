@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://m7j7cohvckgp"]
+
+[ext_resource type="Script" uid="uid://dqpputasty40l" path="res://scripts/prism.gd" id="1_p5yhe"]
+[ext_resource type="Texture2D" uid="uid://s6w3v2rxqlol" path="res://assets/1x/1x/1x/prism.png" id="1_pbn2c"]
+[ext_resource type="PackedScene" uid="uid://640e2dfugqjv" path="res://scenes/grid_snappable.tscn" id="2_2qf61"]
+
+[node name="Prism" type="Node2D" groups=["lenses"]]
+script = ExtResource("1_p5yhe")
+debug_mode = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-7.62939e-06, -40)
+scale = Vector2(0.554893, 0.554893)
+texture = ExtResource("1_pbn2c")
+
+[node name="DetectionArea" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="DetectionArea"]
+position = Vector2(-7.62939e-06, -40)
+scale = Vector2(0.554893, 0.554893)
+polygon = PackedVector2Array(1.37493e-05, -209.049, -252, 209.5, 252, 209.5)
+
+[node name="GridSnappable" parent="." instance=ExtResource("2_2qf61")]
+
+[connection signal="area_entered" from="DetectionArea" to="." method="_on_detection_area_entered"]
+[connection signal="area_exited" from="DetectionArea" to="." method="_on_detection_area_exited"]
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_body_entered"]
+[connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_body_exited"]

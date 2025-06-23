@@ -1,10 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://bkld6beqsqh88"]
+[gd_scene load_steps=15 format=3 uid="uid://bkld6beqsqh88"]
 
 [ext_resource type="PackedScene" uid="uid://dhvvehmyuwrgs" path="res://scenes/wall.tscn" id="1_8tsbn"]
 [ext_resource type="PackedScene" uid="uid://uvswqh21mlhb" path="res://scenes/barrier.tscn" id="2_rqsg2"]
 [ext_resource type="PackedScene" uid="uid://d1esa4j588q6j" path="res://scenes/player.tscn" id="3_fpvgn"]
 [ext_resource type="PackedScene" uid="uid://dwqoch6qgogbj" path="res://scenes/goal.tscn" id="4_xn6mk"]
 [ext_resource type="PackedScene" uid="uid://b3avnyoue3pq7" path="res://scenes/area2d_light.tscn" id="5_8tsbn"]
+[ext_resource type="PackedScene" uid="uid://h4em2vwwpoy1" path="res://scenes/movable_block.tscn" id="6_rqsg2"]
 
 [sub_resource type="Gradient" id="Gradient_8cj0n"]
 offsets = PackedFloat32Array(1)
@@ -91,7 +92,10 @@ shape = SubResource("RectangleShape2D_lnu2h")
 [node name="Walls" type="Node2D" parent="."]
 
 [node name="Wall" parent="Walls" instance=ExtResource("1_8tsbn")]
-position = Vector2(64, 384)
+position = Vector2(64, 448)
+
+[node name="Wall6" parent="Walls" instance=ExtResource("1_8tsbn")]
+position = Vector2(128, 448)
 
 [node name="Wall14" parent="Walls" instance=ExtResource("1_8tsbn")]
 position = Vector2(128, 384)
@@ -106,7 +110,7 @@ position = Vector2(128, 256)
 position = Vector2(192, 256)
 
 [node name="Wall4" parent="Walls" instance=ExtResource("1_8tsbn")]
-position = Vector2(64, 256)
+position = Vector2(128, 192)
 
 [node name="Wall2" parent="Walls" instance=ExtResource("1_8tsbn")]
 position = Vector2(960, 384)
@@ -299,7 +303,7 @@ position = Vector2(0, 576)
 [node name="Barriers" type="Node2D" parent="."]
 
 [node name="Barrier3" parent="Barriers" instance=ExtResource("2_rqsg2")]
-position = Vector2(192, 320)
+position = Vector2(-192, 320)
 rotation = 1.5708
 barrier_color = Color(1, 0, 0, 1)
 target_color = Color(1, 0, 1, 1)
@@ -326,3 +330,17 @@ position = Vector2(1080, 319)
 [node name="Area2dLight" parent="Lights" instance=ExtResource("5_8tsbn")]
 position = Vector2(128, 320)
 color_light = Color(1, 0, 0, 1)
+cone_angle_degrees = 20.0
+light_length = 1.3
+
+[node name="MovableBlock" parent="." instance=ExtResource("6_rqsg2")]
+position = Vector2(64, 192)
+
+[node name="MovableBlock2" parent="." instance=ExtResource("6_rqsg2")]
+position = Vector2(192, 320)
+
+[node name="MovableBlock3" parent="." instance=ExtResource("6_rqsg2")]
+position = Vector2(320, 320)
+
+[node name="MovableBlock4" parent="." instance=ExtResource("6_rqsg2")]
+position = Vector2(256, 320)

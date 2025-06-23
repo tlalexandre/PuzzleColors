@@ -1,20 +1,20 @@
-# Updated LightManager.gd - Enhanced for Area2D light system
+# singletons/light_manager.gd - Refactored for generic object support
 extends Node
 
 # Dictionary to track all active lights in the scene
 var active_lights: Dictionary = {}  # light_id -> Light node
 
-# Dictionary to track barrier-light relationships
-var barrier_light_map: Dictionary = {}  # barrier_node -> {light_source -> color}
+# Dictionary to track object-light relationships (generic for any object type)
+var object_light_map: Dictionary = {}  # object_node -> {light_source -> color}
 
 # Performance optimization - cache collision results for a frame
 var collision_cache: Dictionary = {}
 var cache_frame: int = 0
 
-# Light interaction events
-signal light_hit_barrier(light: Node2D, barrier: Node2D, color: Color)
-signal light_removed_from_barrier(light: Node2D, barrier: Node2D)
-signal barrier_color_changed(barrier: Node2D, new_color: Color)
+# Generic light interaction events
+signal light_hit_object(light: Node2D, object: Node2D, color: Color)
+signal light_removed_from_object(light: Node2D, object: Node2D)
+signal object_lighting_changed(object: Node2D, affecting_lights: Dictionary)
 
 func _ready():
 	print("Light Manager initialized")
@@ -26,7 +26,7 @@ func _clear_collision_cache():
 		collision_cache.clear()
 		cache_frame = Engine.get_process_frames()
 
-# Register a light source with the manager (works with both raycast and area2d lights)
+# Register a light source with the manager
 func register_light(light: Node2D) -> String:
 	var light_id = _generate_light_id(light)
 	active_lights[light_id] = light
@@ -39,23 +39,23 @@ func register_light(light: Node2D) -> String:
 func unregister_light(light: Node2D):
 	var light_id = _find_light_id(light)
 	if light_id != "":
-		# Remove this light from all barriers it was affecting
-		for barrier in barrier_light_map.keys():
-			if barrier_light_map[barrier].has(light):
-				remove_light_from_barrier(light, barrier)
+		# Remove this light from all objects it was affecting
+		for obj in object_light_map.keys():
+			if object_light_map[obj].has(light):
+				remove_light_from_object(light, obj)
 		
 		active_lights.erase(light_id)
 		print("Unregistered light: ", light_id)
 
 # Main function for raycast-based lights (backward compatibility)
 func process_light_collisions(light: Node2D, raycast_array: Array):
-	var new_hit_barriers: Array = []
+	var new_hit_objects: Array = []
 	
-	# Get current barriers this light was hitting
-	var currently_hit_barriers = []
-	for barrier in barrier_light_map.keys():
-		if barrier_light_map[barrier].has(light):
-			currently_hit_barriers.append(barrier)
+	# Get current objects this light was hitting
+	var currently_hit_objects = []
+	for obj in object_light_map.keys():
+		if object_light_map[obj].has(light):
+			currently_hit_objects.append(obj)
 	
 	# Check all raycasts for multiple collision hits
 	for raycast in raycast_array:
@@ -70,76 +70,88 @@ func process_light_collisions(light: Node2D, raycast_array: Array):
 			if collider and collider.is_in_group("movable_blocks"):
 				break
 				
-			if collider and collider.is_in_group("barriers"):
-				var barrier = collider.get_parent()
-				if barrier and not barrier in new_hit_barriers:
-					new_hit_barriers.append(barrier)
+			# Handle any light-reactive object (barriers, lenses, etc.)
+			if collider and _is_light_reactive_object(collider):
+				var obj = collider.get_parent()
+				if obj and not obj in new_hit_objects:
+					new_hit_objects.append(obj)
 				
-				if barrier and barrier.should_block_light():
+				# Check if this object blocks light (only barriers do this currently)
+				if obj and obj.is_in_group("barriers") and obj.has_method("should_block_light") and obj.should_block_light():
 					break
 						
+			# Old lens compatibility
 			if collider and collider.is_in_group("lenses"):
 				var lens = collider.get_parent()
-				lens.handle_light_hit(light, raycast)
+				if lens.has_method("handle_light_hit"):
+					lens.handle_light_hit(light, raycast)
 	
 	# Update lighting state
-	_update_barrier_lighting(light, currently_hit_barriers, new_hit_barriers)
+	_update_object_lighting(light, currently_hit_objects, new_hit_objects)
 
-# New function for area2d-based lights
-func process_area_light_collisions(light: Node2D, confirmed_barriers: Array):
-	# Get current barriers this light was hitting
-	var currently_hit_barriers = []
-	for barrier in barrier_light_map.keys():
-		if barrier_light_map[barrier].has(light):
-			currently_hit_barriers.append(barrier)
+# Check if an object is light-reactive (barriers, lenses, future objects)
+func _is_light_reactive_object(collider: Node2D) -> bool:
+	return collider.is_in_group("barriers") or collider.is_in_group("lenses")
+
+# Helper function to update object lighting state
+func _update_object_lighting(light: Node2D, current_objects: Array, new_objects: Array):
+	# Remove light from objects that are no longer being hit
+	for obj in current_objects:
+		if not obj in new_objects:
+			remove_light_from_object(light, obj)
 	
-	# Update lighting state
-	_update_barrier_lighting(light, currently_hit_barriers, confirmed_barriers)
+	# Add light to newly hit objects
+	for obj in new_objects:
+		if not obj in current_objects:
+			add_light_to_object(light, obj)
 
-# Helper function to update barrier lighting state
-func _update_barrier_lighting(light: Node2D, current_barriers: Array, new_barriers: Array):
-	# Remove light from barriers that are no longer being hit
-	for barrier in current_barriers:
-		if not barrier in new_barriers:
-			remove_light_from_barrier(light, barrier)
-	
-	# Add light to newly hit barriers
-	for barrier in new_barriers:
-		if not barrier in current_barriers:
-			add_light_to_barrier(light, barrier)
-
-# Add a light source to a barrier
-func add_light_to_barrier(light: Node2D, barrier: Node2D):
-	if not barrier_light_map.has(barrier):
-		barrier_light_map[barrier] = {}
+# Add a light source to any object (generic)
+func add_light_to_object(light: Node2D, obj: Node2D):
+	if not object_light_map.has(obj):
+		object_light_map[obj] = {}
 	
 	var light_color = _get_light_color(light)
-	barrier_light_map[barrier][light] = light_color
+	object_light_map[obj][light] = light_color
 	
-	# Update barrier's color
-	update_barrier_color(barrier)
+	# Let the object handle its own lighting response
+	_notify_object_of_lighting_change(obj)
 	
 	# Emit signal
-	light_hit_barrier.emit(light, barrier, light_color)
+	light_hit_object.emit(light, obj, light_color)
 
-# Remove a light source from a barrier
-func remove_light_from_barrier(light: Node2D, barrier: Node2D):
-	if barrier_light_map.has(barrier) and barrier_light_map[barrier].has(light):
-		barrier_light_map[barrier].erase(light)
+# Remove a light source from any object (generic)
+func remove_light_from_object(light: Node2D, obj: Node2D):
+	if object_light_map.has(obj) and object_light_map[obj].has(light):
+		object_light_map[obj].erase(light)
 		
-		# Clean up empty barrier entries
-		if barrier_light_map[barrier].is_empty():
-			barrier_light_map.erase(barrier)
+		# Clean up empty object entries
+		if object_light_map[obj].is_empty():
+			object_light_map.erase(obj)
 		
-		# Update barrier's color
-		update_barrier_color(barrier)
+		# Let the object handle its own lighting response
+		_notify_object_of_lighting_change(obj)
 		
 		# Emit signal
-		light_removed_from_barrier.emit(light, barrier)
+		light_removed_from_object.emit(light, obj)
 
-# Calculate and update a barrier's final color based on all affecting lights
-func update_barrier_color(barrier: Node2D):
-	if not barrier_light_map.has(barrier):
+# Notify an object that its lighting has changed (polymorphic approach)
+func _notify_object_of_lighting_change(obj: Node2D):
+	var affecting_lights = {}
+	if object_light_map.has(obj):
+		affecting_lights = object_light_map[obj]
+	
+	# Different object types handle lighting differently
+	if obj.is_in_group("barriers"):
+		_handle_barrier_lighting(obj, affecting_lights)
+	elif obj.is_in_group("lenses"):
+		_handle_lens_lighting(obj, affecting_lights)
+	
+	# Emit generic signal
+	object_lighting_changed.emit(obj, affecting_lights)
+
+# Handle barrier-specific lighting (existing logic)
+func _handle_barrier_lighting(barrier: Node2D, affecting_lights: Dictionary):
+	if affecting_lights.is_empty():
 		# No lights affecting this barrier
 		if barrier.has_method("update_color_from_manager"):
 			barrier.update_color_from_manager(barrier.barrier_color)
@@ -148,15 +160,22 @@ func update_barrier_color(barrier: Node2D):
 	var final_color = barrier.barrier_color
 	
 	# Add all light colors to the barrier's base color
-	for light_color in barrier_light_map[barrier].values():
+	for light_color in affecting_lights.values():
 		final_color.r = min(final_color.r + light_color.r, 1.0)
 		final_color.g = min(final_color.g + light_color.g, 1.0)
 		final_color.b = min(final_color.b + light_color.b, 1.0)
 	
 	if barrier.has_method("update_color_from_manager"):
 		barrier.update_color_from_manager(final_color)
-	barrier_color_changed.emit(barrier, final_color)
 
+# Handle lens-specific lighting (new)
+func _handle_lens_lighting(lens: Node2D, affecting_lights: Dictionary):
+	# Lenses don't use color mixing like barriers
+	# They process each light individually through their own logic
+	
+	# For prisms specifically, we need to convert the affecting_lights into the format they expect
+	if lens.has_method("handle_light_manager_update"):
+		lens.handle_light_manager_update(affecting_lights)
 
 # Helper function to get light color from any light type
 func _get_light_color(light: Node2D) -> Color:
@@ -175,6 +194,16 @@ func _get_light_color(light: Node2D) -> Color:
 	
 	print("Warning: Could not get color from light ", light.name, " - using white")
 	return Color.WHITE
+
+# LEGACY FUNCTIONS - For backward compatibility
+func add_light_to_barrier(light: Node2D, barrier: Node2D):
+	add_light_to_object(light, barrier)
+
+func remove_light_from_barrier(light: Node2D, barrier: Node2D):
+	remove_light_from_object(light, barrier)
+
+func update_barrier_color(barrier: Node2D):
+	_notify_object_of_lighting_change(barrier)
 
 # Optimized collision detection with caching (for raycast lights)
 func get_multiple_collisions_optimized(raycast: RayCast2D) -> Array:
@@ -236,50 +265,6 @@ func _find_light_id(light: Node2D) -> String:
 			return light_id
 	return ""
 
-# Get all lights affecting a specific barrier
-func get_lights_affecting_barrier(barrier: Node2D) -> Array:
-	if not barrier_light_map.has(barrier):
-		return []
-	return barrier_light_map[barrier].keys()
-
-# Get all barriers affected by a specific light
-func get_barriers_affected_by_light(light: Node2D) -> Array:
-	var affected_barriers = []
-	for barrier in barrier_light_map.keys():
-		if barrier_light_map[barrier].has(light):
-			affected_barriers.append(barrier)
-	return affected_barriers
-
-# Debug functions
-func get_total_active_lights() -> int:
-	return active_lights.size()
-
-func get_total_affected_barriers() -> int:
-	return barrier_light_map.size()
-
-func print_debug_info():
-	print("=== Light Manager Debug ===")
-	print("Active lights: ", active_lights.size())
-	print("Affected barriers: ", barrier_light_map.size())
-	for barrier in barrier_light_map.keys():
-		print("  Barrier ", barrier.name, " affected by ", barrier_light_map[barrier].size(), " lights")
-
-# Color utility functions
-func mix_colors(color1: Color, color2: Color) -> Color:
-	return Color(
-		min(color1.r + color2.r, 1.0),
-		min(color1.g + color2.g, 1.0),
-		min(color1.b + color2.b, 1.0),
-		color1.a
-	)
-
-func colors_approximately_equal(color1: Color, color2: Color, tolerance: float = 0.1) -> bool:
-	return (
-		abs(color1.r - color2.r) < tolerance and
-		abs(color1.g - color2.g) < tolerance and
-		abs(color1.b - color2.b) < tolerance
-	)
-
 # Scene management
 func clear_all_lights():
 	"""Call this when changing scenes or restarting levels"""
@@ -288,7 +273,7 @@ func clear_all_lights():
 			light.cleanup_connections()
 	
 	active_lights.clear()
-	barrier_light_map.clear()
+	object_light_map.clear()
 	collision_cache.clear()
 	print("Light Manager cleared all data")
 

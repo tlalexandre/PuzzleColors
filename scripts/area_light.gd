@@ -8,10 +8,12 @@ class_name AreaLight
 @export var cone_length: float = 1000.0 : set = set_cone_length
 @export var occlusion_check_points: int = 3
 @export var debug_occlusion: bool = false : set = set_debug_occlusion
+@export var light_length: float = 0.85
 
 @onready var torch_light: PointLight2D = $TorchLight
 @onready var light_area: Area2D = $LightDetectionArea
 @onready var collision_polygon: CollisionPolygon2D = $LightDetectionArea/CollisionPolygon2D
+@onready var sprite_2d: Sprite2D = $Sprite2D
 
 var light_id: String = ""
 var objects_in_area: Array = []
@@ -21,12 +23,19 @@ var connected_barriers: Array = []  # Track which barriers we're listening to
 func _ready() -> void:
 	# Apply initial values
 	torch_light.color = color_light
+	sprite_2d.modulate = color_light
+	torch_light.scale.y = light_length
 	setup_light_detection_area()
 	connect_signals()
 	
 	# Register with LightManager
 	if LightManager:
 		light_id = LightManager.register_light(self)
+	
+	# NEW: Only show sprite if parent node is named "Lights"
+	var parent = get_parent()
+	if parent.name != "Lights":
+		sprite_2d.visible = false
 		
 	await get_tree().create_timer(0.5).timeout
 
@@ -214,7 +223,7 @@ func _is_point_visible(from: Vector2, to: Vector2, target_object: Node2D = null)
 	
 	# Use a more specific collision mask - only check for walls and solid barriers
 	# Layer 2 (Walls) = 2, Layer 3 (Player Collision Barriers) = 4
-	query.collision_mask = 6  # Only walls (2) + player collision barriers (4)
+	query.collision_mask = 134  # Only walls (2) + player collision barriers (4)
 	query.exclude = []
 	
 	# Exclude the target object we're checking visibility for
@@ -259,18 +268,21 @@ func _update_lighting_state(new_confirmed_objects: Array):
 	
 	confirmed_lit_objects = new_confirmed_objects
 
+
 func _handle_object_lit(obj: Node2D):
-	if obj.is_in_group("barriers") and LightManager:
-		LightManager.add_light_to_barrier(self, obj)
+	# Use the NEW generic LightManager functions
+	if (obj.is_in_group("barriers") or obj.is_in_group("lenses")) and LightManager:
+		LightManager.add_light_to_object(self, obj)  # Generic function!
 	if obj.is_in_group("movable_blocks"):
 		pass
 
 func _handle_object_unlit(obj: Node2D):
-	if obj.is_in_group("barriers") and LightManager:
-		LightManager.remove_light_from_barrier(self, obj)
+	# Use the NEW generic LightManager functions
+	if (obj.is_in_group("barriers") or obj.is_in_group("lenses")) and LightManager:
+		LightManager.remove_light_from_object(self, obj)  # Generic function!
 	if obj.is_in_group("movable_blocks") and LightManager:
 		print("Remove Light from movable block")
-		LightManager.remove_light_from_barrier(self,obj)
+		LightManager.remove_light_from_object(self, obj)
 
 func _process(delta):
 	# Periodic line of sight check (less frequent for performance)

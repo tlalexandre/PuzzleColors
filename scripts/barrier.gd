@@ -1,4 +1,4 @@
-# barrier.gd - Timer-based solution with ColorRect visual feedback
+# barrier.gd - Updated for generic LightManager system
 extends Node2D
 
 # Add this single signal - that's it!
@@ -31,9 +31,15 @@ func _ready() -> void:
 	original_occluder = light_occluder_2d.occluder
 	update_target_outline()
 	
+	# Connect to NEW generic LightManager signals
 	if LightManager:
-		LightManager.light_hit_barrier.connect(_on_light_hit)
-		LightManager.light_removed_from_barrier.connect(_on_light_removed)
+		LightManager.light_hit_object.connect(_on_light_hit_object)
+		LightManager.light_removed_from_object.connect(_on_light_removed_from_object)
+		# Keep old connections for backward compatibility
+		if LightManager.has_signal("light_hit_barrier"):
+			LightManager.light_hit_barrier.connect(_on_light_hit)
+		if LightManager.has_signal("light_removed_from_barrier"):
+			LightManager.light_removed_from_barrier.connect(_on_light_removed)
 
 func _process(delta: float) -> void:
 	# Update timer
@@ -59,7 +65,24 @@ func update_color_visual():
 		# Not passable, show current display color
 		color_rect.color = current_display_color
 
-# Called by LightManager when lights change
+# NEW: Handle bulk lighting updates from LightManager (polymorphic approach)
+func handle_light_manager_update(affecting_lights: Dictionary):
+	"""Called by LightManager when the lighting state changes"""
+	
+	# Calculate the combined color from all affecting lights
+	var final_color = barrier_color
+	
+	if not affecting_lights.is_empty():
+		# Add all light colors to the barrier's base color
+		for light_color in affecting_lights.values():
+			final_color.r = min(final_color.r + light_color.r, 1.0)
+			final_color.g = min(final_color.g + light_color.g, 1.0)
+			final_color.b = min(final_color.b + light_color.b, 1.0)
+	
+	# Update the display color
+	update_color_from_manager(final_color)
+
+# Called by LightManager when lights change (backward compatibility)
 func update_color_from_manager(new_color: Color):
 	current_display_color = new_color
 	
@@ -67,6 +90,19 @@ func update_color_from_manager(new_color: Color):
 	if not is_currently_passable:
 		color_rect.color = new_color
 
+# NEW: Generic light hit handler
+func _on_light_hit_object(light: Node2D, target: Node2D, color: Color):
+	if target == self:
+		# This barrier was hit by a light
+		pass  # LightManager handles the color calculation
+
+# NEW: Generic light removed handler  
+func _on_light_removed_from_object(light: Node2D, target: Node2D):
+	if target == self:
+		# Light was removed from this barrier
+		pass  # LightManager handles the color calculation
+
+# OLD: Backward compatibility handlers
 func _on_light_hit(light: Node2D, barrier: Node2D, color: Color):
 	if barrier == self:
 		pass
@@ -169,9 +205,16 @@ func should_block_light() -> bool:
 
 func cleanup():
 	if LightManager:
-		if LightManager.light_hit_barrier.is_connected(_on_light_hit):
+		# Disconnect NEW generic signals
+		if LightManager.light_hit_object.is_connected(_on_light_hit_object):
+			LightManager.light_hit_object.disconnect(_on_light_hit_object)
+		if LightManager.light_removed_from_object.is_connected(_on_light_removed_from_object):
+			LightManager.light_removed_from_object.disconnect(_on_light_removed_from_object)
+		
+		# Disconnect OLD backward compatibility signals
+		if LightManager.has_signal("light_hit_barrier") and LightManager.light_hit_barrier.is_connected(_on_light_hit):
 			LightManager.light_hit_barrier.disconnect(_on_light_hit)
-		if LightManager.light_removed_from_barrier.is_connected(_on_light_removed):
+		if LightManager.has_signal("light_removed_from_barrier") and LightManager.light_removed_from_barrier.is_connected(_on_light_removed):
 			LightManager.light_removed_from_barrier.disconnect(_on_light_removed)
 
 func _exit_tree():

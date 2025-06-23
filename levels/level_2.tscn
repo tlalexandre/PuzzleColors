@@ -25,7 +25,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Area2dLight:rotation")
+tracks/0/path = NodePath("Lights/Area2dLight:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -42,7 +42,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Area2dLight:rotation")
+tracks/0/path = NodePath("Lights/Area2dLight:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -431,6 +431,9 @@ barrier_color = Color(1, 0, 0, 1)
 position = Vector2(1024, 320)
 barrier_color = Color(1, 0, 0, 1)
 
-[node name="Area2dLight" parent="." instance=ExtResource("5_5722l")]
+[node name="Lights" type="Node2D" parent="."]
+
+[node name="Area2dLight" parent="Lights" instance=ExtResource("5_5722l")]
 position = Vector2(576, 320)
 color_light = Color(0, 1, 0, 1)
+cone_angle_degrees = 20.0
